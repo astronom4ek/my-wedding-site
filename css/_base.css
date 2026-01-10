@@ -1,0 +1,31 @@
+/* ========== ОСНОВНЫЕ СТИЛИ ========== */
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--color-dark);
+    background-color: var(--color-bg);
+    background-image: url('../assets/images/цветочки_патерн.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Общие стили для всех контентных блоков */
+.content-block {
+    background-color: var(--color-white);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md) auto;
+    max-width: 800px;
+    box-shadow: var(--shadow-medium), var(--shadow-inset);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+}

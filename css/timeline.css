@@ -1,0 +1,606 @@
+
+/* Таймлайн - красная линия с сердцем */
+.timeline-section {
+    position: relative;
+    padding: 100px 20px;
+    margin: 80px 0;
+    overflow: hidden;
+    min-height: 2000px;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    height: 1700px; /* Увеличили высоту для смещенного пути */
+}
+
+/* Контейнер для SVG линии */
+.timeline-path-container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%);
+    z-index: 1;
+    overflow: visible;
+}
+
+.timeline-path-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Линия видна сразу */
+.timeline-path-line {
+    stroke: #26660d;
+    stroke-width: 4;
+    stroke-linecap: round;
+    fill: none;
+    filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.3));
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000; /* Начинаем не нарисованной */
+    transition: stroke-dashoffset 0.1s linear;
+}
+
+/* Сердце, которое рисует линию - ОТНОСИТЕЛЬНОЕ позиционирование */
+/* Обертка для сердца внутри таймлайна */
+.timeline-heart-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    pointer-events: none;
+    overflow: visible;
+}
+
+/* Сердце видно сразу, но прозрачное */
+
+.timeline-heart {
+    position: absolute; /* Начинаем как fixed */
+    width: 90px;
+    height: 90px;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    opacity: 1;
+    z-index: 11; /* Выше календаря */
+    pointer-events: none;
+     transition: opacity 0.9s ease, transform 0.9s ease;
+    
+    /* Зелёная подсветка */
+    /* filter: 
+        drop-shadow(0 0 15px rgba(38, 102, 13, 0.7))
+        drop-shadow(0 0 30px rgba(38, 102, 13, 0.4)); */
+}
+
+.heart-icon {
+    width: 100%;
+    height: 100%;
+    fill: #26660d;
+    /* filter: 
+        drop-shadow(0 0 15px rgba(230, 57, 70, 0.7))
+        drop-shadow(0 0 30px rgba(230, 57, 70, 0.4)); */
+    animation: heartbeat 1.2s ease-in-out infinite;
+}
+
+/* Эффект кисти позади сердца */
+.heart-brush {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    /* background: radial-gradient(
+        circle at center,
+        rgba(230, 57, 70, 0.4) 0%,
+        rgba(230, 57, 70, 0.2) 30%,
+        rgba(230, 57, 70, 0.1) 50%,
+        transparent 70%
+    ); */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    /* filter: blur(8px); */
+    z-index: 11;
+    animation: pulseBrush 1.5s ease-in-out infinite alternate;
+}
+
+
+@keyframes heartbeat {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+    }
+    25% { 
+        transform: scale(1.15) rotate(-2deg); 
+    }
+    50% { 
+        transform: scale(1.1) rotate(2deg); 
+    }
+    75% { 
+        transform: scale(1.12) rotate(-1deg); 
+    }
+}
+
+@keyframes pulseBrush {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 0.4;
+    }
+}
+
+/* УДАЛИТЬ все дублирующиеся стили .timeline-event */
+/* Оставить ТОЛЬКО этот блок: */
+
+/* Стили для блоков событий в шахматном порядке */
+.timeline-event {
+    position: absolute;
+    margin: 0;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    opacity: 0.7;
+    transition: all 0.5s ease;
+    z-index: 2;
+    width: 40%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(230, 57, 70, 0.1);
+    min-height: 120px;
+}
+
+.timeline-event.active {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+/* Точка на линии для каждого события */
+/* .timeline-event::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 3px solid #f29c75;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(230, 57, 70, 0.15);
+    z-index: 3;
+} */
+
+/* Четные блоки (справа от линии) */
+.timeline-event:nth-child(even) {
+    right: 0;
+    text-align: left;
+}
+
+.timeline-event:nth-child(even)::before {
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Нечетные блоки (слева от линии) */
+.timeline-event:nth-child(odd) {
+    left: 0;
+    text-align: right;
+}
+
+.timeline-event:nth-child(odd)::before {
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Стили текста */
+.event-time {
+    font-size: 28px;
+    font-weight: 800;
+    color: #26660d;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.event-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.event-description {
+    color: #666;
+    line-height: 1.5;
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* Позиционирование конкретных блоков по вертикали */
+.timeline-event:nth-child(1) { top: 15%; } /* 14:00 */
+.timeline-event:nth-child(2) { top: 30%; } /* 15:30 */
+.timeline-event:nth-child(3) { top: 45%; } /* 16:30 */
+.timeline-event:nth-child(4) { top: 60%; } /* 21:00 */
+
+/* Адаптивность */
+/* @media (max-width: 768px) {
+    .timeline-event {
+        width: 75%;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%);
+        text-align: center !important;
+    }
+    
+    .timeline-event::before {
+        left: 50% !important;
+        right: auto !important;
+        top: -12px !important;
+        transform: translateX(-50%) !important;
+    }
+    
+    .timeline-event:nth-child(1) { top: 12%; }
+    .timeline-event:nth-child(2) { top: 27%; }
+    .timeline-event:nth-child(3) { top: 42%; }
+    .timeline-event:nth-child(4) { top: 57%; }
+} */
+
+/* Адаптивность - ШАХМАТНЫЙ ПОРЯДОК ДЛЯ МОБИЛЬНЫХ */
+@media (max-width: 768px) {
+    .timeline-event {
+        width: 85%; /* Немного шире для мобильных */
+        transform: translateX(-50%);
+        text-align: center;
+        min-height: 110px; /* Немного меньше для мобильных */
+        padding: 20px;
+    }
+    
+    /* Четные блоки (15:30, 21:00) - смещаем ВПРАВО */
+    .timeline-event:nth-child(even) {
+        left: 55% !important; /* Смещение вправо */
+        right: auto !important;
+        transform: translateX(-50%);
+        text-align: left; /* Текст по левому краю */
+    }
+    
+    /* Нечетные блоки (14:00, 16:30) - смещаем ВЛЕВО */
+    .timeline-event:nth-child(odd) {
+        left: 45% !important; /* Смещение влево */
+        right: auto !important;
+        transform: translateX(-50%);
+        text-align: right; /* Текст по правому краю */
+    }
+    
+    /* Точки на линии */
+    .timeline-event::before {
+        left: 50% !important;
+        right: auto !important;
+        top: -12px !important;
+        transform: translateX(-50%) !important;
+    }
+    
+    /* Точки для четных блоков (справа) - смещаем точку левее */
+    .timeline-event:nth-child(even)::before {
+        left: 30% !important;
+    }
+    
+    /* Точки для нечетных блоков (слева) - смещаем точку правее */
+    .timeline-event:nth-child(odd)::before {
+        left: 70% !important;
+    }
+    
+    /* Шрифты поменьше для мобильных */
+    .event-time {
+        font-size: 24px;
+    }
+    
+    .event-title {
+        font-size: 19px;
+    }
+    
+    .event-description {
+        font-size: 15px;
+    }
+    
+    /* Вертикальные позиции для мобильных (можно оставить как есть) */
+    .timeline-event:nth-child(1) { top: 12%; }
+    .timeline-event:nth-child(2) { top: 27%; }
+    .timeline-event:nth-child(3) { top: 42%; }
+    .timeline-event:nth-child(4) { top: 57%; }
+}
+
+/* Для очень маленьких экранов (менее 480px) */
+@media (max-width: 480px) {
+    .timeline-event {
+        width: 90%;
+    }
+    
+    .timeline-event:nth-child(even) {
+        left: 52% !important; /* Меньше смещение */
+    }
+    
+    .timeline-event:nth-child(odd) {
+        left: 48% !important; /* Меньше смещение */
+    }
+    
+    /* Еще меньше шрифты */
+    .event-time {
+        font-size: 22px;
+    }
+    
+    .event-title {
+        font-size: 18px;
+    }
+}
+
+/* Обновляем CSS переменные на зелёную гамму */
+:root {
+    --wedding-primary: #26660d;           /* Основной зелёный */
+    --wedding-primary-light: rgba(38, 102, 13, 0.7);   /* 70% прозрачности */
+    --wedding-primary-soft: rgba(38, 102, 13, 0.3);    /* 30% прозрачности */
+    --wedding-primary-shadow: rgba(38, 102, 13, 0.15); /* 15% прозрачности */
+}
+/* Компактный календарь БЕЗ ФОНА */
+.timeline-calendar {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 420px; /* Немного шире */
+    background: transparent !important;
+    border-radius: 0;
+    padding: 20px 30px; /* Увеличили отступы */
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    z-index: 12;
+    text-align: center;
+    opacity: 1; /* Убрали прозрачность */
+}
+
+/* Месяц */
+.calendar-month {
+    font-size: 18px; /* Увеличили */
+    font-weight: 800; /* Жирнее */
+    color: var(--wedding-primary);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px; /* Увеличили */
+    opacity: 1; /* Полная непрозрачность */
+    text-shadow: 0 2px 4px rgba(38, 102, 13, 0.2);
+}
+
+/* Компактная строка с датами */
+.calendar-compact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px; /* Увеличили расстояние */
+    margin-bottom: 20px;
+}
+
+/* Общие стили для всех дней */
+.calendar-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+    min-width: 50px; /* Увеличили */
+    min-height: 50px;
+}
+
+/* Номера дней (для обычных дат) */
+.date-before .day-number,
+.date-after .day-number {
+    font-size: 28px; /* Увеличили */
+    font-weight: 500; /* Средняя жирность */
+    color: #555; /* Более темный серый */
+    opacity: 0.9; /* Меньше прозрачности */
+}
+
+/* День свадьбы - особенный */
+.wedding-day {
+    position: relative;
+    min-width: 85px; /* Увеличили */
+    min-height: 85px;
+    transform: scale(1.3); /* Увеличили масштаб */
+    z-index: 2;
+}
+
+/* Плейсхолдер для даты 16 (под сердечком) */
+.wedding-heart-placeholder {
+    position: relative;
+    width: 85px; /* Увеличили */
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Число 16 в календаре (видно, когда сердце ушло) */
+.wedding-day-number {
+    font-size: 34px; /* Увеличили */
+    font-weight: 900; /* Очень жирный */
+    color: var(--wedding-primary);
+    text-shadow: 0 3px 15px rgba(38, 102, 13, 0.3); /* Более выраженная тень */
+    opacity: 1; /* Полная непрозрачность */
+    z-index: 13;
+    position: relative; 
+}
+
+/* Подпись */
+.calendar-label {
+    font-size: 15px; /* Увеличили */
+    color: var(--wedding-primary);
+    font-style: italic;
+    font-weight: 600; /* Жирнее */
+    opacity: 0.9; /* Меньше прозрачности */
+    letter-spacing: 1px;
+    padding-top: 15px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Эффекты при наведении на обычные даты */
+.date-before:hover .day-number,
+.date-after:hover .day-number {
+    color: var(--wedding-primary);
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* Фоновые квадратики вокруг цифр */
+.date-square {
+    position: absolute;
+    width: 50px; /* Увеличили пропорционально */
+    height: 50px;
+    background: rgba(38, 102, 13, 0.08); /* Немного ярче */
+    border: 2px solid rgba(38, 102, 13, 0.15); /* Более заметная обводка */
+    border-radius: 10px; /* Немного больше скругление */
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+/* Квадрат для даты свадьбы (больше и ярче) */
+.wedding-square {
+    width: 85px; /* Увеличили пропорционально */
+    height: 85px;
+    background: rgba(38, 102, 13, 0.12); /* Ярче */
+    border: 3px solid rgba(38, 102, 13, 0.2); /* Толще и ярче */
+    border-radius: 15px; /* Больше скругление */
+}
+
+/* Эффекты при наведении */
+.calendar-day:hover .date-square {
+    background: rgba(38, 102, 13, 0.15);
+    border-color: rgba(38, 102, 13, 0.3);
+    transform: scale(1.08);
+    box-shadow: 0 5px 20px rgba(38, 102, 13, 0.15);
+}
+
+.wedding-day:hover .wedding-square {
+    background: rgba(38, 102, 13, 0.18);
+    border-color: rgba(38, 102, 13, 0.35);
+    box-shadow: 0 8px 25px rgba(38, 102, 13, 0.2);
+}
+
+/* Адаптивность для календаря */
+@media (max-width: 768px) {
+    .timeline-calendar {
+        width: 360px;
+        padding: 18px 25px;
+        top: 25px;
+    }
+    
+    .calendar-compact {
+        gap: 20px;
+    }
+    
+    .calendar-day {
+        min-width: 45px;
+        min-height: 45px;
+    }
+    
+    .wedding-day {
+        min-width: 75px;
+        min-height: 75px;
+        transform: scale(1.25);
+    }
+    
+    .wedding-heart-placeholder {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .wedding-day-number {
+        font-size: 30px;
+    }
+    
+    .date-before .day-number,
+    .date-after .day-number {
+        font-size: 26px;
+    }
+    
+    .date-square {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .wedding-square {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .calendar-month {
+        font-size: 17px;
+        letter-spacing: 2.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-calendar {
+        width: 320px;
+        padding: 15px 20px;
+        top: 20px;
+    }
+    
+    .calendar-compact {
+        gap: 15px;
+    }
+    
+    .calendar-day {
+        min-width: 40px;
+        min-height: 40px;
+    }
+    
+    .wedding-day {
+        min-width: 65px;
+        min-height: 65px;
+        transform: scale(1.2);
+    }
+    
+    .wedding-heart-placeholder {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .wedding-day-number {
+        font-size: 28px;
+    }
+    
+    .date-before .day-number,
+    .date-after .day-number {
+        font-size: 24px;
+    }
+    
+    .date-square {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .wedding-square {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .calendar-month {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+    
+    .calendar-label {
+        font-size: 14px;
+    }
+}
+
+
+
+

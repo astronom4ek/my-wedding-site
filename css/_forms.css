@@ -1,0 +1,26 @@
+/* ========== СТИЛИ ДЛЯ ФОРМ ========== */
+
+.form-note {
+    color: var(--color-gray);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+.form-note a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    border-bottom: 1px dashed;
+}
+
+.form-note a:hover {
+    border-bottom-style: solid;
+}
+
+.rsvp-description {
+    color: var(--color-gray);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.5;
+}

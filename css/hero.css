@@ -1,0 +1,464 @@
+/* Блок приветствия (Hero Section) */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fcf9f7 0%, #f8f4f1 100%);
+  padding: 20px;
+}
+
+.hero-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Фоновые элементы */
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(248, 233, 233, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(232, 211, 197, 0.2) 0%, transparent 50%);
+}
+
+/* Декоративные цветочки */
+.bg-flower-1,
+.bg-flower-2,
+.bg-flower-3 {
+  position: absolute;
+  font-size: 4rem;
+  opacity: 0.05;
+  z-index: 0;
+  animation: float 20s infinite ease-in-out;
+}
+
+.bg-flower-1 {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.bg-flower-2 {
+  top: 70%;
+  right: 10%;
+  animation-delay: 5s;
+}
+
+.bg-flower-3 {
+  bottom: 20%;
+  left: 15%;
+  animation-delay: 10s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Основной контент */
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+  min-height: 80vh;
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 600px;
+}
+
+/* Приветственный текст */
+.greeting-text {
+  margin-bottom: 60px;
+}
+
+.greeting-line {
+  font-size: 1.4rem;
+  color: #a89b8c;
+  margin-bottom: 8px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.greeting-line:nth-child(1) { animation-delay: 0.3s; }
+.greeting-line:nth-child(2) { animation-delay: 0.5s; }
+.greeting-line:nth-child(3) { animation-delay: 0.7s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Имена */
+.names-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.bride-name, .groom-name {
+  font-size: 5.5rem;
+  font-weight: 300;
+  color: #8a7b6d;
+  letter-spacing: 3px;
+  margin: 0;
+  line-height: 1;
+  position: relative;
+  font-family: 'Playfair Display', serif;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: nameAppear 1s ease forwards;
+}
+
+.bride-name {
+  animation-delay: 1s;
+}
+
+.groom-name {
+  animation-delay: 1.2s;
+}
+
+@keyframes nameAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heart-icon {
+  opacity: 0;
+  animation: heartBeat 1.5s ease forwards;
+  animation-delay: 1.1s;
+  filter: drop-shadow(0 4px 12px rgba(248, 180, 208, 0.4));
+}
+
+@keyframes heartBeat {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Подзаголовок с датой */
+.hero-subtitle {
+  margin-top: 40px;
+}
+
+.wedding-date {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  margin-bottom: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 1.5s;
+}
+
+.date-number {
+  font-size: 4rem;
+  font-weight: 300;
+  color: #d1b8a0;
+  line-height: 1;
+}
+
+.date-month {
+  font-size: 2rem;
+  color: #8a7b6d;
+  font-weight: 300;
+  text-transform: lowercase;
+}
+
+.date-year {
+  font-size: 1.8rem;
+  color: #a89b8c;
+  font-weight: 300;
+}
+
+.location-hint {
+  font-size: 1.3rem;
+  color: #a89b8c;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 1.7s;
+}
+
+/* Фотография */
+.hero-photo {
+  flex: 1;
+  max-width: 500px;
+  position: relative;
+}
+
+.photo-frame {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateX(50px);
+  animation: slideInRight 1.2s ease forwards;
+  animation-delay: 1.8s;
+}
+
+@keyframes slideInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.photo-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 125%; /* Соотношение 4:5 */
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.couple-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 1s ease;
+}
+
+.photo-frame:hover .couple-photo {
+  transform: scale(1.05);
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 70%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.frame-decoration {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 1px solid rgba(248, 233, 233, 0.5);
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Подпись под фото */
+.photo-caption {
+  margin-top: 25px;
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 2.2s;
+}
+
+.photo-caption p {
+  font-size: 1.1rem;
+  color: #8a7b6d;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Декоративная разделительная линия */
+.divider-line {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 2.5s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .hero-content {
+    gap: 60px;
+  }
+  
+  .bride-name, .groom-name {
+    font-size: 4.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 50px;
+    min-height: auto;
+    padding: 80px 0;
+  }
+  
+  .hero-text {
+    max-width: 100%;
+  }
+  
+  .names-wrapper {
+    justify-content: center;
+  }
+  
+  .greeting-text {
+    margin-bottom: 40px;
+  }
+  
+  .hero-photo {
+    max-width: 450px;
+  }
+  
+  .bg-flower-1,
+  .bg-flower-2,
+  .bg-flower-3 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    padding: 20px 15px;
+  }
+  
+  .greeting-line {
+    font-size: 1.2rem;
+  }
+  
+  .bride-name, .groom-name {
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+  }
+  
+  .names-wrapper {
+    gap: 25px;
+  }
+  
+  .heart-icon svg {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .date-number {
+    font-size: 3rem;
+  }
+  
+  .date-month {
+    font-size: 1.6rem;
+  }
+  
+  .date-year {
+    font-size: 1.4rem;
+  }
+  
+  .location-hint {
+    font-size: 1.1rem;
+  }
+  
+  .hero-photo {
+    max-width: 350px;
+  }
+  
+  .photo-caption p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .names-wrapper {
+    gap: 20px;
+    flex-direction: column;
+  }
+  
+  .bride-name, .groom-name {
+    font-size: 3rem;
+  }
+  
+  .heart-icon {
+    transform: rotate(90deg);
+    margin: 10px 0;
+  }
+  
+  .wedding-date {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .date-number {
+    font-size: 2.5rem;
+  }
+  
+  .date-month,
+  .date-year {
+    font-size: 1.3rem;
+  }
+  
+  .hero-photo {
+    max-width: 100%;
+  }
+}

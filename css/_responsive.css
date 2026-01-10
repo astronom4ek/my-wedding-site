@@ -1,0 +1,97 @@
+/* ========== МЕДИА-ЗАПРОСЫ ========== */
+
+/* Планшеты */
+@media (max-width: 1024px) {
+    .form-container iframe {
+        min-height: 750px;
+        transform: scale(0.95);
+    }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+    body {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .content-block {
+        padding: var(--spacing-md);
+        margin: var(--spacing-sm) auto;
+        border-radius: var(--radius-lg);
+    }
+    
+    .header {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .names {
+        font-size: var(--font-size-xxl);
+    }
+    
+    .date {
+        font-size: var(--font-size-lg);
+    }
+    
+    .address {
+        font-size: var(--font-size-lg);
+        line-height: 1.3;
+    }
+    
+    .schedule-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .time {
+        font-size: var(--font-size-lg);
+        min-width: auto;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .event h3 {
+        font-size: var(--font-size-md);
+    }
+    
+    .form-container {
+        margin: var(--spacing-sm) auto;
+        border-radius: var(--radius-md);
+    }
+    
+    .form-container iframe {
+        min-height: 800px;
+        transform: scale(0.85);
+    }
+    
+    .section-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+    .content-block {
+        padding: var(--spacing-md) var(--spacing-sm);
+        margin: var(--spacing-xs) auto;
+    }
+    
+    .names {
+        font-size: var(--font-size-xl);
+    }
+    
+    .address {
+        font-size: var(--font-size-md);
+    }
+    
+    .button {
+        width: 100%;
+    }
+    
+    .form-container iframe {
+        min-height: 900px;
+        transform: scale(0.65);
+        margin-left: -17.5%;
+        width: 135% !important;
+    }
+}

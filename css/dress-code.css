@@ -1,0 +1,522 @@
+/* dress-code.css - простой и рабочий вариант */
+
+/* Блок дресс-кода */
+.dress-code-section {
+  padding: 80px 20px;
+  background-color: #fcf9f7;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dress-code-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dress-code-section .section-title {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #8a7b6d;
+  margin-bottom: 30px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.dress-code-intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 50px;
+  font-size: 1.2rem;
+  color: #5a5a5a;
+  line-height: 1.6;
+}
+
+/* Цветовая палитра */
+.color-palette {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.color-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.color-circle:hover {
+  transform: translateY(-5px);
+}
+
+.color-name {
+  position: absolute;
+  bottom: -30px;
+  font-size: 0.85rem;
+  color: #8a7b6d;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Контейнер для слайдеров */
+.sliders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  margin-bottom: 50px;
+}
+
+.gender-slider {
+  width: 100%;
+}
+
+.slider-title {
+  font-size: 1.8rem;
+  color: #8a7b6d;
+  margin-bottom: 25px;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Обертка для слайдера */
+.slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Навигационные кнопки */
+.slider-nav {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8a7b6d;
+  border: none;
+  outline: none;
+  font-size: 20px;
+}
+
+.slider-nav:hover {
+  background-color: #f8e9e9;
+}
+
+.slider-nav.prev {
+  left: -25px;
+}
+
+.slider-nav.next {
+  right: -25px;
+}
+
+/* СЛАЙДЕР - ПРОСТАЯ РАБОЧАЯ ВЕРСИЯ */
+.slider {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  min-height: 350px;
+}
+
+.slide {
+  flex: 0 0 33.333%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Адаптивность */
+@media (max-width: 1023px) {
+  .slide {
+    flex: 0 0 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  .slide {
+    flex: 0 0 100%;
+  }
+  
+  .slider-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .slider-nav.prev {
+    left: 5px;
+  }
+  
+  .slider-nav.next {
+    right: 5px;
+  }
+}
+
+/* Карточка с фото */
+.slide-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
+}
+
+.slide-card img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  display: block;
+}
+
+/* .slide-caption {
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: #5a5a5a;
+  line-height: 1.4;
+} */
+/* Добавьте это в ваш dress-code.css */
+.slide-caption {
+  display: none !important;
+}
+
+.slide-caption {
+  visibility: hidden;
+  height: 0;
+  opacity: 0;
+}
+
+
+/* Примечание */
+.dress-code-note {
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 20px;
+  background-color: rgba(248, 233, 233, 0.3);
+  border-radius: 12px;
+  border-left: 4px solid #d1b8a0;
+  font-size: 1.1rem;
+  color: #5a5a5a;
+  line-height: 1.6;
+}
+
+
+
+/* Стили для структурированного текста дресс-кода */
+.dress-code-guidelines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 30px 0;
+  justify-content: center;
+}
+
+.guideline-column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 20px;
+  background-color: rgba(248, 233, 233, 0.2);
+  border-radius: 10px;
+  border-left: 3px solid #d1b8a0;
+}
+
+.guideline-column h4 {
+  color: #8a7b6d;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.guideline-column ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #5a5a5a;
+  line-height: 1.6;
+}
+
+/* .guideline-column li {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.guideline-column li:before {
+  content: "•";
+  color: #d1b8a0;
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+} */
+
+
+
+.dress-code-intro p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.dress-code-intro .dress-code-note {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: rgba(248, 233, 233, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid #d1b8a0;
+  font-style: italic;
+}
+
+/* Адаптивность */
+@media (max-width: 767px) {
+  .dress-code-guidelines {
+    gap: 20px;
+  }
+  
+  .guideline-column {
+    min-width: 100%;
+  }
+}
+
+
+/* Стили для структурированного текста дресс-кода */
+.dress-code-guidelines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 30px 0;
+  justify-content: center;
+}
+
+.guideline-column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 25px;
+  background-color: rgba(248, 233, 233, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 184, 160, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guideline-column:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.guideline-column h4 {
+  color: #8a7b6d;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(209, 184, 160, 0.3);
+  position: relative;
+}
+
+.guideline-column h4:after {
+  /* content: "❀"; */
+  position: absolute;
+  right: 10px;
+  color: #d1b8a0;
+  font-size: 1.2rem;
+}
+
+.guideline-column ul {
+  margin: 0;
+  padding-left: 0;
+  color: #5a5a5a;
+  line-height: 1.6;
+}
+
+.guideline-column li {
+  margin-bottom: 14px;
+  position: relative;
+  padding-left: 35px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+}
+
+/* ЦВЕТОЧКИ ВМЕСТО ТОЧЕК  =========================================*/
+/* Обновленные стили с выбранными символами цветов */
+
+.dress-code-guidelines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 30px 0;
+  justify-content: center;
+}
+
+.guideline-column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 25px;
+  background-color: rgba(248, 233, 233, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 184, 160, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guideline-column:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.guideline-column h4 {
+  color: #8a7b6d;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(209, 184, 160, 0.3);
+  position: relative;
+}
+
+/* Цветочки в заголовках */
+.guideline-column.women h4:after {
+  /* content: "✿"; Черно-белый цветок */
+  position: absolute;
+  right: 10px;
+  color: #f8b4d0;
+  font-size: 1.3rem;
+}
+
+.guideline-column.men h4:after {
+  /* content: "⚘"; Стилизованный цветок */
+  position: absolute;
+  right: 10px;
+  color: #8a7b6d;
+  font-size: 1.3rem;
+}
+
+.guideline-column ul {
+  margin: 0;
+  padding-left: 0;
+  color: #5a5a5a;
+  line-height: 1.6;
+}
+
+.guideline-column li {
+  margin-bottom: 14px;
+  position: relative;
+  padding-left: 35px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+}
+
+/* ЦВЕТОЧКИ ВМЕСТО ТОЧЕК - ПРОСТЫЕ СИМВОЛЫ */
+.guideline-column li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* Для женщин - черно-белый цветок (✿) */
+.guideline-column.women li:before {
+  content: "✿"; /* Черно-белый цветок */
+  color: #8a7b6d; /* Розовый цвет */
+  font-size: 1.3rem;
+}
+
+/* Для мужчин - стилизованный цветок (⚘) */
+.guideline-column.men li:before {
+  content: "✿"; /* Стилизованный цветок */
+  color: #8a7b6d; /* Коричневый цвет */
+  font-size: 1.3rem;
+}
+
+.dress-code-intro p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.dress-code-intro .dress-code-note {
+  margin-top: 25px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(248, 233, 233, 0.3), rgba(232, 211, 197, 0.2));
+  border-radius: 10px;
+  border-left: 4px solid #d1b8a0;
+  font-style: italic;
+  position: relative;
+}
+
+/* Букет из разных цветочков для примечания */
+.dress-code-intro .dress-code-note:before {
+  /* content: "✿⚘"; Комбинация обоих цветочков */
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+.dress-code-intro .dress-code-note p {
+  margin-left: 60px;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+/* Адаптивность */
+@media (max-width: 767px) {
+  .dress-code-guidelines {
+    gap: 20px;
+  }
+  
+  .guideline-column {
+    min-width: 100%;
+    padding: 20px;
+  }
+  
+  .guideline-column li {
+    padding-left: 30px;
+  }
+  
+  .guideline-column li:before {
+    font-size: 1.2rem;
+  }
+  
+  .dress-code-intro .dress-code-note:before {
+    position: static;
+    transform: none;
+    display: block;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  
+  .dress-code-intro .dress-code-note p {
+    margin-left: 0;
+  }
+}

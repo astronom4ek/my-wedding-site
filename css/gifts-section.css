@@ -1,0 +1,357 @@
+/* Блок с подарками */
+.gifts-section {
+  padding: 80px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, 
+    rgba(248, 233, 233, 0.3) 0%,
+    rgba(232, 211, 197, 0.2) 50%,
+    rgba(209, 184, 160, 0.1) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.gifts-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(248, 233, 233, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(232, 211, 197, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.gifts-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #8a7b6d;
+  margin-bottom: 30px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 1px;
+  background-color: #d1b8a0;
+  margin: 15px auto 0;
+}
+
+/* Вступление */
+.gifts-intro {
+  max-width: 800px;
+  margin: 0 auto 50px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #5a5a5a;
+  line-height: 1.7;
+  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Контейнер с кнопочками-подарками */
+.gifts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 50px;
+}
+
+/* Кнопочки-подарки */
+.gift-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 25px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gift-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    #f8e9e9 0%,
+    #e8d3c5 50%,
+    #d1b8a0 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gift-option:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(248, 233, 233, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.gift-option:hover::before {
+  opacity: 1;
+}
+
+.gift-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.gift-option:hover .gift-icon {
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+.gift-title {
+  font-size: 1.4rem;
+  color: #8a7b6d;
+  margin-bottom: 12px;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+}
+
+.gift-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d1b8a0, transparent);
+  opacity: 0.6;
+}
+
+.gift-description {
+  color: #666;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Примечание про цветы */
+.gifts-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 800px;
+  margin: 40px auto 50px;
+  padding: 25px;
+  background: linear-gradient(135deg, 
+    rgba(248, 233, 233, 0.4) 0%,
+    rgba(232, 211, 197, 0.3) 100%);
+  background-color: #d1b8a0;
+  border-radius: 15px;
+  /* border-left: 4px solid #d1b8a0; */
+  /* box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); */
+}
+
+.note-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  margin-top: 5px;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
+}
+
+.note-content {
+  flex: 1;
+}
+
+.note-content p {
+  color: #5a5a5a;
+  line-height: 1.7;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.note-content strong {
+  color: #8a7b6d;
+}
+
+/* Кнопка вишлиста */
+.wishlist-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.wishlist-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 35px;
+  background: linear-gradient(135deg, #8a7b6d 0%, #6d6257 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 25px rgba(138, 123, 109, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.wishlist-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  transition: left 0.7s ease;
+}
+
+.wishlist-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 
+    0 15px 35px rgba(138, 123, 109, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #9c8c7e 0%, #7d7166 100%);
+}
+
+.wishlist-button:hover::before {
+  left: 100%;
+}
+
+.wishlist-icon {
+  font-size: 1.5rem;
+  transition: transform 0.4s ease;
+}
+
+.wishlist-button:hover .wishlist-icon {
+  transform: rotate(15deg) scale(1.2);
+}
+
+.wishlist-arrow {
+  font-size: 1.4rem;
+  transition: transform 0.4s ease;
+  opacity: 0.8;
+}
+
+.wishlist-button:hover .wishlist-arrow {
+  transform: translateX(10px);
+  opacity: 1;
+}
+
+.wishlist-note {
+  margin-top: 15px;
+  color: #8a7b6d;
+  font-size: 0.95rem;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Анимация появления */
+.gift-option {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.gift-option:nth-child(1) { animation-delay: 0.1s; }
+.gift-option:nth-child(2) { animation-delay: 0.2s; }
+.gift-option:nth-child(3) { animation-delay: 0.3s; }
+.gift-option:nth-child(4) { animation-delay: 0.4s; }
+.gift-option:nth-child(5) { animation-delay: 0.5s; }
+.gift-option:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .gifts-section {
+    padding: 60px 15px;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+  }
+  
+  .gifts-intro {
+    font-size: 1.1rem;
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .gifts-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .gift-option {
+    padding: 25px 20px;
+    min-height: auto;
+  }
+  
+  .gifts-note {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    padding: 20px;
+  }
+  
+  .wishlist-button {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gift-icon {
+    font-size: 2.5rem;
+  }
+  
+  .gift-title {
+    font-size: 1.3rem;
+  }
+  
+  .wishlist-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
