@@ -1,0 +1,81 @@
+/* ========== FOOTER ========== */
+.footer {
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+  font-family: var(--font-secondary);
+  
+  /* Стандартная ширина как у других блоков */
+  max-width: 800px; /* Уже, чем другие блоки */
+  margin: var(--spacing-xl) auto;
+  
+  /* Скругление всех углов */
+  border-radius: var(--radius-large);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-small);
+  border: 1px solid rgba(209, 184, 160, 0.2);
+}
+
+.footer p {
+  color: var(--color-brown);
+  font-size: var(--font-size-body-large); /* Крупнее текст */
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.6;
+  padding: 0 var(--spacing-sm);
+}
+
+.footer p:first-child {
+  font-style: italic;
+  color: var(--color-brown-light);
+}
+
+.footer p:last-child {
+  margin-top: var(--spacing-md); /* Больше отступ */
+  font-size: var(--font-size-h4); /* Крупные имена */
+  color: var(--color-brown);
+  font-family: var(--font-primary);
+  font-weight: 500;
+}
+
+/* Сердечко */
+/* .footer p:last-child::after {
+  content: " ❤️";
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-left: 8px;
+} */
+
+/* На мобильных */
+@media (max-width: 768px) {
+  .footer {
+    padding: var(--spacing-md) var(--spacing-sm);
+    border-radius: var(--radius-medium);
+    margin: var(--spacing-lg) var(--spacing-sm);
+    max-width: calc(100% - (var(--spacing-sm) * 2));
+  }
+  
+  .footer p {
+    font-size: var(--font-size-body);
+    padding: 0;
+  }
+  
+  .footer p:last-child {
+    font-size: var(--font-size-h4);
+    margin-top: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: var(--spacing-md) var(--spacing-xs);
+    margin: var(--spacing-md) var(--spacing-xs);
+    max-width: calc(100% - (var(--spacing-xs) * 2));
+  }
+  
+  .footer p {
+    font-size: var(--font-size-body-small);
+  }
+  
+  .footer p:last-child {
+    font-size: var(--font-size-h4);
+  }
+}

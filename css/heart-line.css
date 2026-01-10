@@ -1,0 +1,64 @@
+/* heart.css - без исчезновения */
+.timeline-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.heart-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 1; /* Всегда видимо */
+    /* Убрали transition: opacity 0.3s ease; */
+}
+
+.heart {
+    width: 100%;
+    height: 100%;
+    background-color: #ff4d6d;
+    position: relative;
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.heart::before {
+    top: -50%;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: -50%;
+}
+
+.heart-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 0;
+    background: linear-gradient(to bottom, transparent, #ff4d6d);
+    z-index: 99;
+    opacity: 1; /* Всегда видима */
+}
+
+/* Класс heart-visible теперь не нужен для opacity, но оставим для совместимости */
+.heart-visible {
+    /* opacity уже 1 */
+}

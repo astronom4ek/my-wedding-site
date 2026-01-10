@@ -2,15 +2,22 @@
 /* Импортируем все модули */
 
 
-@import '_variables.css';
+/* @import '_variables.css'; */
+@import 'variables.css';
 @import '_reset.css';
 @import '_base.css';
 @import '_components.css';
 @import '_forms.css';
 @import '_responsive.css';
+
 @import 'timeline.css';
+@import 'heart-line.css';
+
 @import 'dress-code.css';
 @import 'map.css';
 @import 'gifts-section.css';
 @import 'hero.css';
+@import 'footer.css';
+
+/* @import 'hero_2.css'; */
 

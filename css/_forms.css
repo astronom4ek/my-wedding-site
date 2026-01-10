@@ -1,26 +1,86 @@
-/* ========== СТИЛИ ДЛЯ ФОРМ ========== */
+/* ========== ПРОСТЫЕ СТИЛИ ДЛЯ ФОРМ ========== */
 
+/* Примечание под формой */
 .form-note {
-    color: var(--color-gray);
-    font-size: var(--font-size-sm);
-    margin-top: var(--spacing-md);
-    text-align: center;
+  color: var(--color-gray-light);
+  font-size: var(--font-size-caption);
+  margin-top: var(--spacing-md);
+  text-align: center;
+  line-height: 1.5;
 }
 
 .form-note a {
-    color: var(--color-secondary);
-    text-decoration: none;
-    border-bottom: 1px dashed;
+  color: var(--color-brown);
+  text-decoration: none;
+  border-bottom: 1px dashed;
+  transition: all var(--transition-fast);
 }
 
 .form-note a:hover {
-    border-bottom-style: solid;
+  border-bottom-style: solid;
+  color: var(--color-beige);
 }
 
+/* Описание формы */
 .rsvp-description {
-    color: var(--color-gray);
-    margin-bottom: var(--spacing-lg);
-    font-style: italic;
-    text-align: center;
-    line-height: 1.5;
+  color: var(--color-gray-light);
+  margin-bottom: var(--spacing-lg);
+  font-style: italic;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Основные стили для формы */
+.rsvp-form {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(209, 184, 160, 0.2);
+}
+
+/* СКРУГЛЕНИЕ ДЛЯ RSVP CONTENT-BLOCK */
+.rsvp.content-block {
+  border-radius: var(--radius-large); /* Скругление углов */
+  overflow: hidden; /* Важно! */
+}
+
+/* Для iframe внутри */
+.rsvp.content-block iframe {
+  border-radius: calc(var(--radius-large) - 8px); /* Немного меньше */
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .rsvp-form-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .rsvp-form-section .container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .rsvp-form {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: var(--spacing-md) var(--spacing-sm);
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+  
+  /* На мобильных */
+  .rsvp.content-block {
+    border-radius: var(--radius-medium);
+  }
+  
+  .rsvp.content-block iframe {
+    border-radius: calc(var(--radius-medium) - 6px);
+  }
 }

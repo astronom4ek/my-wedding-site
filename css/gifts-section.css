@@ -1,43 +1,29 @@
-/* Блок с подарками */
+/* gifts-section.css - блок с подарками */
 .gifts-section {
-  padding: 80px 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, 
-    rgba(248, 233, 233, 0.3) 0%,
-    rgba(232, 211, 197, 0.2) 50%,
-    rgba(209, 184, 160, 0.1) 100%);
+  padding: var(--spacing-xl) var(--spacing-xs);
+  font-family: var(--font-secondary);
+  /* ФОН НЕ ЗАДАЕМ - он будет общим для сайта */
   position: relative;
-  overflow: hidden;
-}
-
-.gifts-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(248, 233, 233, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(232, 211, 197, 0.1) 0%, transparent 50%);
-  pointer-events: none;
 }
 
 .gifts-section .container {
-  max-width: 1200px;
+  max-width: var(--screen-xl);
   margin: 0 auto;
-  position: relative;
-  z-index: 1;
 }
 
 .section-title {
   text-align: center;
-  font-size: 2.8rem;
-  color: #8a7b6d;
-  margin-bottom: 30px;
+  font-size: var(--font-size-h2);
+  color: var(--color-brown);
+  margin-bottom: var(--spacing-sm);
   font-weight: 300;
   letter-spacing: 2px;
   position: relative;
+  font-family: var(--font-primary);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.2s;
 }
 
 .section-title::after {
@@ -45,102 +31,99 @@
   display: block;
   width: 80px;
   height: 1px;
-  background-color: #d1b8a0;
+  background-color: var(--color-beige);
   margin: 15px auto 0;
 }
 
-/* Вступление */
+/* Анимация из первого блока */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Вступление - ОТДЕЛЬНЫЙ БЛОК */
 .gifts-intro {
   max-width: 800px;
-  margin: 0 auto 50px;
+  margin: 0 auto var(--spacing-md);
   text-align: center;
-  font-size: 1.2rem;
-  color: #5a5a5a;
+  font-size: var(--font-size-body);
+  color: var(--color-gray-light);
   line-height: 1.7;
-  padding: 25px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: var(--spacing-sm);
+  background-color: var(--color-white);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-small);
+  border: 1px solid rgba(209, 184, 160, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.4s;
 }
 
 /* Контейнер с кнопочками-подарками */
 .gifts-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  margin-bottom: 50px;
+  gap: 30px; /* ПРОМЕЖУТОК МЕЖДУ БЛОКАМИ - здесь виден общий фон сайта */
+  margin-bottom: var(--spacing-md);
 }
 
-/* Кнопочки-подарки */
+/* Кнопочки-подарки - ОТДЕЛЬНЫЕ БЛОКИ */
 .gift-option {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 25px;
-  background-color: rgba(255, 255, 255, 0.85);
-  border-radius: 20px;
+  padding: var(--spacing-sm) var(--spacing-xs);
+  background-color: var(--color-white);
+  border-radius: var(--radius-medium);
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.05),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  transition: all var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(209, 184, 160, 0.2);
+  box-shadow: var(--shadow-small);
   cursor: pointer;
   min-height: 220px;
   position: relative;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
 }
 
-.gift-option::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, 
-    #f8e9e9 0%,
-    #e8d3c5 50%,
-    #d1b8a0 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+/* Анимации появления с задержками */
+.gift-option:nth-child(1) { animation-delay: 0.5s; }
+.gift-option:nth-child(2) { animation-delay: 0.6s; }
+.gift-option:nth-child(3) { animation-delay: 0.7s; }
+.gift-option:nth-child(4) { animation-delay: 0.8s; }
+.gift-option:nth-child(5) { animation-delay: 0.9s; }
+.gift-option:nth-child(6) { animation-delay: 1.0s; }
 
 .gift-option:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.1),
-    0 0 0 2px rgba(248, 233, 233, 0.3),
-    inset 0 0 20px rgba(255, 255, 255, 0.9);
-  background-color: rgba(255, 255, 255, 0.95);
-}
-
-.gift-option:hover::before {
-  opacity: 1;
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-medium);
+  border-color: rgba(209, 184, 160, 0.4);
 }
 
 .gift-icon {
   font-size: 3rem;
-  margin-bottom: 20px;
-  transition: transform 0.4s ease;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  margin-bottom: var(--spacing-xs);
+  transition: transform var(--transition-medium);
+  color: var(--color-brown);
 }
 
 .gift-option:hover .gift-icon {
   transform: scale(1.2) rotate(5deg);
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
 }
 
 .gift-title {
-  font-size: 1.4rem;
-  color: #8a7b6d;
+  font-size: var(--font-size-h4);
+  color: var(--color-brown);
   margin-bottom: 12px;
   font-weight: 500;
   position: relative;
   display: inline-block;
+  font-family: var(--font-primary);
 }
 
 .gift-title::after {
@@ -151,39 +134,40 @@
   transform: translateX(-50%);
   width: 40px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #d1b8a0, transparent);
+  background: linear-gradient(90deg, transparent, var(--color-beige), transparent);
   opacity: 0.6;
 }
 
 .gift-description {
-  color: #666;
+  color: var(--color-gray-light);
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: var(--font-size-caption);
   margin: 0;
 }
 
-/* Примечание про цветы */
+/* Примечание про цветы - ОТДЕЛЬНЫЙ БЛОК */
 .gifts-note {
   display: flex;
   align-items: flex-start;
-  gap: 20px;
+  gap: var(--spacing-xs);
   max-width: 800px;
-  margin: 40px auto 50px;
-  padding: 25px;
-  background: linear-gradient(135deg, 
-    rgba(248, 233, 233, 0.4) 0%,
-    rgba(232, 211, 197, 0.3) 100%);
-  background-color: #d1b8a0;
-  border-radius: 15px;
-  /* border-left: 4px solid #d1b8a0; */
-  /* box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); */
+  margin: var(--spacing-md) auto var(--spacing-md);
+  padding: var(--spacing-sm);
+  background-color: var(--color-white);
+  border-radius: var(--radius-large);
+  border: 1px solid rgba(209, 184, 160, 0.2);
+  box-shadow: var(--shadow-small);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 1.1s;
 }
 
 .note-icon {
   font-size: 2.2rem;
   flex-shrink: 0;
   margin-top: 5px;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
+  color: var(--color-brown);
 }
 
 .note-content {
@@ -191,20 +175,24 @@
 }
 
 .note-content p {
-  color: #5a5a5a;
+  color: var(--color-gray-light);
   line-height: 1.7;
   margin: 0;
-  font-size: 1.1rem;
+  font-size: var(--font-size-body-small);
 }
 
 .note-content strong {
-  color: #8a7b6d;
+  color: var(--color-brown);
 }
 
 /* Кнопка вишлиста */
 .wishlist-container {
   text-align: center;
-  margin-top: 40px;
+  margin-top: var(--spacing-md);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 1.3s;
 }
 
 .wishlist-button {
@@ -212,32 +200,19 @@
   align-items: center;
   gap: 15px;
   padding: 18px 35px;
-  background: linear-gradient(135deg, #8a7b6d 0%, #6d6257 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-brown) 0%, #6d6257 100%);
+  color: var(--color-white);
   text-decoration: none;
   border-radius: 50px;
-  font-size: 1.2rem;
+  font-size: var(--font-size-body);
   font-weight: 500;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 
     0 8px 25px rgba(138, 123, 109, 0.3),
     inset 0 1px 1px rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
-}
-
-.wishlist-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.2), 
-    transparent);
-  transition: left 0.7s ease;
+  font-family: var(--font-secondary);
 }
 
 .wishlist-button:hover {
@@ -245,85 +220,49 @@
   box-shadow: 
     0 15px 35px rgba(138, 123, 109, 0.4),
     inset 0 1px 1px rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #9c8c7e 0%, #7d7166 100%);
-}
-
-.wishlist-button:hover::before {
-  left: 100%;
+  background: linear-gradient(135deg, var(--color-brown-light) 0%, #7d7166 100%);
 }
 
 .wishlist-icon {
   font-size: 1.5rem;
-  transition: transform 0.4s ease;
+  transition: transform var(--transition-medium);
 }
 
 .wishlist-button:hover .wishlist-icon {
   transform: rotate(15deg) scale(1.2);
 }
 
-.wishlist-arrow {
-  font-size: 1.4rem;
-  transition: transform 0.4s ease;
-  opacity: 0.8;
-}
-
-.wishlist-button:hover .wishlist-arrow {
-  transform: translateX(10px);
-  opacity: 1;
-}
-
 .wishlist-note {
   margin-top: 15px;
-  color: #8a7b6d;
+  color: var(--color-brown);
   font-size: 0.95rem;
   font-style: italic;
   opacity: 0.8;
 }
 
-/* Анимация появления */
-.gift-option {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-.gift-option:nth-child(1) { animation-delay: 0.1s; }
-.gift-option:nth-child(2) { animation-delay: 0.2s; }
-.gift-option:nth-child(3) { animation-delay: 0.3s; }
-.gift-option:nth-child(4) { animation-delay: 0.4s; }
-.gift-option:nth-child(5) { animation-delay: 0.5s; }
-.gift-option:nth-child(6) { animation-delay: 0.6s; }
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Адаптивность */
 @media (max-width: 768px) {
   .gifts-section {
-    padding: 60px 15px;
+    padding: var(--spacing-md) var(--spacing-xxs);
   }
   
   .section-title {
-    font-size: 2.2rem;
+    font-size: var(--font-size-h3);
   }
   
   .gifts-intro {
-    font-size: 1.1rem;
-    padding: 20px;
-    margin-bottom: 40px;
+    font-size: var(--font-size-body-small);
+    padding: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
   }
   
   .gifts-container {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: var(--spacing-xs);
   }
   
   .gift-option {
-    padding: 25px 20px;
+    padding: var(--spacing-sm) var(--spacing-xxs);
     min-height: auto;
   }
   
@@ -332,12 +271,28 @@
     align-items: center;
     text-align: center;
     gap: 15px;
-    padding: 20px;
+    padding: var(--spacing-xs);
   }
   
   .wishlist-button {
     padding: 15px 25px;
-    font-size: 1.1rem;
+    font-size: var(--font-size-body-small);
+  }
+  
+  /* Корректируем задержки анимаций для мобильных */
+  .gift-option:nth-child(1) { animation-delay: 0.3s; }
+  .gift-option:nth-child(2) { animation-delay: 0.4s; }
+  .gift-option:nth-child(3) { animation-delay: 0.5s; }
+  .gift-option:nth-child(4) { animation-delay: 0.6s; }
+  .gift-option:nth-child(5) { animation-delay: 0.7s; }
+  .gift-option:nth-child(6) { animation-delay: 0.8s; }
+  
+  .gifts-note {
+    animation-delay: 0.9s;
+  }
+  
+  .wishlist-container {
+    animation-delay: 1.0s;
   }
 }
 
@@ -353,5 +308,9 @@
   .wishlist-button {
     width: 100%;
     justify-content: center;
+  }
+  
+  .gifts-intro {
+    font-size: 1rem;
   }
 }

@@ -13,94 +13,64 @@
         <h1 class="names">Настенька <span class="ampersand">&</span> Ванечка</h1>
         <p class="date">16 мая 2026</p>
     </header> -->
+    <!-- СЕКЦИЯ ПРИВЕТСТВИЯ -->
 
-    <main>
 
-    <section class="hero-section" id="hero">
+ <section class="hero-section" id="hero">
   <div class="hero-container">
-    <!-- Фоновые декоративные элементы -->
-    <!-- <div class="hero-background">
-      <div class="bg-overlay"></div>
-      <div class="bg-flower-1">🌸</div>
-      <div class="bg-flower-2">🌺</div>
-      <div class="bg-flower-3">🌷</div>
-    </div> -->
-    
     <div class="hero-content">
-      <!-- Левая колонка с текстом -->
+      <!-- Текст (для всех устройств) -->
       <div class="hero-text">
         <div class="greeting-text">
-          <p class="greeting-line">Дорогие родные и близкие!</p>
-          <p class="greeting-line">Будем рады разделить с вами чудесный празник в день нашей свадьбы.</p>
-          <p class="greeting-line"></p>
+          <p class="greeting-line">Дорогие родные и близкие,</p>
+          <p class="greeting-line">мы счастливы пригласить вас на нашу свадьбу!</p>
         </div>
         
         <div class="names-wrapper">
           <h1 class="bride-name">Анастасия</h1>
-          <h1 class="bride-name">&</h1>
-          
-          <!-- <div class="heart-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" 
-                    fill="#f8b4d0" fill-opacity="0.9"/>
-            </svg>
-          </div> -->
+          <span class="ampersand">&</span>
           <h1 class="groom-name">Иван</h1>
         </div>
         
         <div class="hero-subtitle">
           <div class="wedding-date">
-            <!-- <span class="date-number">16</span>
-            <span class="date-month">мая</span> -->
             <span class="date-year">16 мая 2026</span>
           </div>
           <p class="location-hint">Усадьба Шелепаново</p>
         </div>
       </div>
       
-      <!-- Правая колонка с фотографией -->
-      <div class="hero-photo">
+      <!-- Фото для десктопа (скрывается на мобильных) -->
+      <div class="hero-photo-desktop">
         <div class="photo-frame">
           <div class="photo-container">
-            <img src="assets/hero/photo.jpg" alt="Настя и Ваня" class="couple-photo" loading="eager">
-            <div class="photo-overlay"></div>
+            <img src="assets/images/our_3.jpg" alt="Настя и Ваня" class="couple-photo" loading="eager">
           </div>
-          <div class="frame-decoration"></div>
         </div>
-        
-        <!-- <div class="photo-caption">
-          <p>Мы с нетерпением ждём этого дня!</p>
-        </div> -->
       </div>
     </div>
     
-    <!-- Декоративная линия разделения -->
-    <div class="divider-line">
-      <svg width="100%" height="20" viewBox="0 0 1200 20" preserveAspectRatio="none">
-        <path d="M0,10 Q300,0 600,10 T1200,10" 
-              fill="none" 
-              stroke="rgba(209, 184, 160, 0.3)" 
-              stroke-width="1"/>
-      </svg>
+    <!-- Фото для мобильных (скрывается на десктопе) -->
+    <div class="hero-photo-mobile">
+      <div class="photo-frame">
+        <img src="assets/images/our_3.jpg" alt="Настя и Ваня" class="couple-photo">
+      </div>
     </div>
   </div>
 </section>
     
 
 
-<!-- Секция таймлайна -->
+<!-- Секция таймлайна - БЕЗ ФОНА -->
+<!-- Секция таймлайна - ТОЛЬКО календарь и блоки -->
 <section class="timeline-section" id="timeline">
-
-<!-- Компактный мини-календарь БЕЗ ФОНА -->
-<div class="timeline-calendar" id="timelineCalendar">
-    <!-- Месяц -->
+    <!-- Календарь сверху -->
+ <div class="timeline-calendar">
     <div class="calendar-month">НАШ МАЙ</div>
-    
-    <!-- Компактная строка с датами -->
     <div class="calendar-compact">
         <!-- 14 мая -->
         <div class="calendar-day date-before">
-            <div class="date-square"></div>
+            <div class="date-square"></div> <!-- Добавляем квадратик -->
             <span class="day-number">14</span>
         </div>
         
@@ -111,11 +81,9 @@
         </div>
         
         <!-- 16 мая - ДЕНЬ СВАДЬБЫ -->
-        <div class="calendar-day wedding-day" data-day="16">
-            <div class="date-square wedding-square"></div>
-            <div class="wedding-heart-placeholder">
-                <span class="wedding-day-number">16</span>
-            </div>
+        <div class="calendar-day wedding-day">
+            <div class="date-square wedding-square"></div> <!-- Особый квадратик -->
+            <span class="wedding-day-number">16</span>
         </div>
         
         <!-- 17 мая -->
@@ -130,70 +98,34 @@
             <span class="day-number">18</span>
         </div>
     </div>
-    
-    <!-- Подпись -->
-    <!-- <div class="calendar-label">Наш особенный день</div> -->
 </div>
 
-    <!-- Сердце ПОСЛЕ календаря - чтобы быть под цифрой -->
-    <div class="timeline-heart-wrapper" id="heartWrapper">
-        <div class="timeline-heart" id="timelineHeart">
-            <div class="heart-brush"></div>
-            <svg class="heart-icon" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-        </div>
-    </div>
-
-
+    <!-- Блоки расписания -->
     <div class="timeline-container">
-        <!-- SVG линия с волнами и петлями -->
-        <div class="timeline-path-container">
-            <svg class="timeline-path-svg" viewBox="0 0 400 1800" preserveAspectRatio="none">
-                <!-- Волнообразная линия с петлями -->
-                <path class="timeline-path-line" id="timelinePath" d="
-                    M 200,100           
-                    Q 320,150 180,230   
-                    Q 60,300 220,380
-                    Q 340,450 160,530
-                    Q 80,600 240,680
-                    Q 360,760 200,830
-                    Q 40,900 200,970
-                    Q 360,1040 200,1110
-                    Q 40,1180 200,1250
-                    Q 360,1320 200,1390
-                    Q 40,1460 200,1530
-    
-                "/>
-            </svg>
-        </div>
-        
-        <!-- Блоки событий в шахматном порядке -->
-        <div class="timeline-event" data-time="14:00">
+        <div class="timeline-event">
             <div class="event-time">14:00</div>
             <h3 class="event-title">Сбор гостей</h3>
             <p class="event-description">Время пролетит незаметно за игристым (общением)</p>
         </div>
 
-        <div class="timeline-event" data-time="15:30">
+        <div class="timeline-event">
             <div class="event-time">15:00</div>
             <h3 class="event-title">Церемония</h3>
-            <p class="event-description">В радости, в богатсве и в здравии</p>
+            <p class="event-description">В радости, в богатстве и в здравии</p>
         </div>
 
-        <div class="timeline-event" data-time="16:30">
+        <div class="timeline-event">
             <div class="event-time">16:00</div>
             <h3 class="event-title">Банкет</h3>
             <p class="event-description">То, чего все ждем</p>
         </div>
 
-        <div class="timeline-event" data-time="21:00">
+        <div class="timeline-event">
             <div class="event-time">20:30</div>
             <h3 class="event-title">Афтерпати - дискотека</h3>
             <p class="event-description">Танцы и веселье до утра (шутка, до 22:30)</p>
         </div>
     </div>
-    
 </section>
 <!-- В секции таймлайна, в конце .timeline-container (после блоков событий)
 <div class="glass-image-container" id="glassContainer">
