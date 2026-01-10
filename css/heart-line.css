@@ -1,306 +1,91 @@
-// heart.js - Плавное движение сердца с гладкой линией-следом
+/* heart.css - для следа сердца */
+.timeline-section {
+    position: relative;
+    overflow: visible !important;
+}
 
-export function initHeartAnimation() {
-    const timelineSection = document.getElementById('timeline');
-    if (!timelineSection) {
-        console.error('Не найдена секция #timeline');
-        return;
-    }
-    
-    // === НАСТРОЙКИ ===
-    const START_POSITION = 0;      // Откуда начинать (0% = верх секции)
-    const END_POSITION = 100;      // Где закончить (100% = низ секции)
-    const WINDOW_POSITION = 50;    // Позиция сердца в окне (50% = посередине)
-    const SPEED_FACTOR = 1.5;      // Скорость (1.0 = нормальная)
-    const WAVE_AMPLITUDE = 80;     // Амплитуда волны
-    const WAVE_FREQUENCY = 2.5;    // Частота волны
-    const SMOOTHNESS = 0.2;        // Сглаживание движения (0-1, чем больше тем плавнее)
-    // =================
-    
-    // Создаем элементы
-    const heartContainer = document.createElement('div');
-    const heart = document.createElement('div');
-    const heartLine = document.createElement('div');
-    
-    // Настраиваем классы
-    heartContainer.className = 'heart-container';
-    heart.className = 'heart';
-    heartLine.className = 'heart-line';
-    
-    // Добавляем в секцию
-    heartContainer.appendChild(heart);
-    timelineSection.appendChild(heartContainer);
-    timelineSection.appendChild(heartLine);
-    
-    // Переменные для плавного движения
-    let currentTop = 0;
-    let currentLeft = 0;
-    let targetTop = 0;
-    let targetLeft = 0;
-    
-    let sectionTop = 0;
-    let sectionHeight = 0;
-    let windowHeight = 0;
-    let animationStarted = false;
-    
-    // Массив точек для сглаженной линии
-    let smoothedPoints = [];
-    let rawPoints = [];
-    
-    // Обновляем размеры
-    function updateSizes() {
-        const rect = timelineSection.getBoundingClientRect();
-        sectionTop = rect.top + window.pageYOffset;
-        sectionHeight = rect.height;
-        windowHeight = window.innerHeight;
-        
-        // Сбрасываем точки
-        smoothedPoints = [];
-        rawPoints = [];
-        
-        // Устанавливаем начальную позицию
-        const startPx = (START_POSITION / 100) * sectionHeight;
-        currentTop = startPx;
-        targetTop = startPx;
-        currentLeft = 0;
-        targetLeft = 0;
-        
-        updateHeartPosition();
-    }
-    
-    // Функция для вычисления волны
-    function calculateWaveOffset(progress) {
-        return Math.sin(progress * Math.PI * 2 * WAVE_FREQUENCY) * WAVE_AMPLITUDE;
-    }
-    
-    // Плавное обновление позиции
-    function updateHeartPosition() {
-        // Плавная интерполяция
-        currentTop = currentTop + (targetTop - currentTop) * SMOOTHNESS;
-        currentLeft = currentLeft + (targetLeft - currentLeft) * SMOOTHNESS;
-        
-        // Обновляем позицию сердца
-        heartContainer.style.top = `${currentTop}px`;
-        heartContainer.style.left = `calc(50% + ${currentLeft}px)`;
-        
-        // Добавляем точку для линии (после сглаживания)
-        smoothedPoints.push({
-            x: currentLeft,
-            y: currentTop,
-            timestamp: Date.now()
-        });
-        
-        // Ограничиваем количество точек
-        if (smoothedPoints.length > 200) {
-            smoothedPoints = smoothedPoints.slice(-150);
-        }
-        
-        // Рисуем сглаженную линию
-        drawSmoothTrail();
-        
-        // Продолжаем анимацию, если нужно
-        if (Math.abs(targetTop - currentTop) > 0.1 || Math.abs(targetLeft - currentLeft) > 0.1) {
-            requestAnimationFrame(updateHeartPosition);
-        }
-    }
-    
-    // Основная функция обновления (вызывается при скролле)
-    function updateHeartTarget() {
-        const scrollY = window.pageYOffset;
-        
-        // Вычисляем позицию сердца относительно окна
-        const heartWindowPosition = (WINDOW_POSITION / 100) * windowHeight;
-        
-        // Когда начинать анимацию
-        const animationStart = sectionTop - heartWindowPosition;
-        // Когда заканчивать анимацию
-        const animationEnd = sectionTop + sectionHeight - heartWindowPosition;
-        
-        if (scrollY > animationStart) {
-            if (!animationStarted) {
-                animationStarted = true;
-                smoothedPoints = [];
-                rawPoints = [];
-            }
-            
-            // Показываем сердце
-            heartContainer.classList.add('heart-visible');
-            heartLine.style.opacity = '1';
-            heartContainer.style.opacity = '1';
-            
-            let progress = 0;
-            
-            if (scrollY < animationEnd) {
-                const totalAnimationRange = animationEnd - animationStart;
-                const currentScrollInRange = scrollY - animationStart;
-                progress = (currentScrollInRange / totalAnimationRange) * SPEED_FACTOR;
-                progress = Math.max(0, Math.min(1, progress));
-            } else {
-                progress = 1;
-            }
-            
-            // Вычисляем целевую позицию
-            const startPx = (START_POSITION / 100) * sectionHeight;
-            const endPx = (END_POSITION / 100) * sectionHeight;
-            targetTop = startPx + progress * (endPx - startPx);
-            
-            // Вычисляем волну
-            targetLeft = calculateWaveOffset(progress);
-            
-            // Сохраняем сырые точки для отладки
-            rawPoints.push({
-                x: targetLeft,
-                y: targetTop,
-                progress: progress
-            });
-            
-            // Запускаем плавное обновление, если оно не активно
-            if (Math.abs(targetTop - currentTop) > 0.1 || Math.abs(targetLeft - currentLeft) > 0.1) {
-                requestAnimationFrame(updateHeartPosition);
-            }
-            
-        } else {
-            // До начала анимации
-            const startPx = (START_POSITION / 100) * sectionHeight;
-            targetTop = startPx;
-            targetLeft = 0;
-            
-            // Очищаем линию
-            smoothedPoints = [];
-            rawPoints = [];
-            heartLine.innerHTML = '';
-            
-            // Устанавливаем позицию сразу (без анимации)
-            currentTop = startPx;
-            currentLeft = 0;
-            heartContainer.style.top = `${startPx}px`;
-            heartContainer.style.left = '50%';
-            
-            heartContainer.classList.add('heart-visible');
-            heartContainer.style.opacity = '1';
-            heartLine.style.opacity = '1';
-        }
-    }
-    
-    // Рисуем сглаженную линию
-    function drawSmoothTrail() {
-        if (smoothedPoints.length < 2) return;
-        
-        let canvas = heartLine.querySelector('canvas');
-        if (!canvas) {
-            canvas = document.createElement('canvas');
-            heartLine.innerHTML = '';
-            heartLine.appendChild(canvas);
-            
-            canvas.style.position = 'absolute';
-            canvas.style.top = '0';
-            canvas.style.left = '0';
-            canvas.style.width = '100%';
-            canvas.style.height = '100%';
-            canvas.style.pointerEvents = 'none';
-        }
-        
-        const canvasWidth = timelineSection.offsetWidth;
-        const canvasHeight = sectionHeight;
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-        
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        
-        const centerX = canvasWidth / 2;
-        
-        // Рисуем сглаженную линию
-        ctx.beginPath();
-        ctx.lineWidth = 4;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        
-        // Градиент
-        const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
-        gradient.addColorStop(0, 'rgba(255, 77, 109, 0.2)');
-        gradient.addColorStop(0.3, 'rgba(255, 77, 109, 0.6)');
-        gradient.addColorStop(1, 'rgba(255, 77, 109, 0.9)');
-        ctx.strokeStyle = gradient;
-        
-        // Используем алгоритм сглаживания Catmull-Rom
-        for (let i = 0; i < smoothedPoints.length - 1; i++) {
-            const p0 = i > 0 ? smoothedPoints[i - 1] : smoothedPoints[i];
-            const p1 = smoothedPoints[i];
-            const p2 = smoothedPoints[i + 1];
-            const p3 = i < smoothedPoints.length - 2 ? smoothedPoints[i + 2] : p2;
-            
-            // Интерполяция Catmull-Rom
-            for (let t = 0; t <= 1; t += 0.1) {
-                const t2 = t * t;
-                const t3 = t2 * t;
-                
-                const x = 0.5 * ((2 * p1.x) +
-                    (-p0.x + p2.x) * t +
-                    (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 +
-                    (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3);
-                
-                const y = 0.5 * ((2 * p1.y) +
-                    (-p0.y + p2.y) * t +
-                    (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 +
-                    (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * t3);
-                
-                if (t === 0) {
-                    ctx.moveTo(centerX + x, y);
-                } else {
-                    ctx.lineTo(centerX + x, y);
-                }
-            }
-        }
-        
-        ctx.stroke();
-        
-        // Добавляем свечение вокруг линии
-        ctx.shadowColor = '#ff4d6d';
-        ctx.shadowBlur = 10;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-    }
-    
-    // Обработчик скролла
-    let ticking = false;
-    function onScroll() {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updateHeartTarget();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }
-    
-    // Инициализация
-    function init() {
-        updateSizes();
-        updateHeartTarget();
-        
-        // Начинаем анимацию
-        requestAnimationFrame(updateHeartPosition);
-        
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', () => {
-            updateSizes();
-            updateHeartTarget();
-        });
-        
-        console.log('Smooth heart trail initialized');
-    }
-    
-    // Запуск
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-    
-    // API для тестирования
-    return {
-        getPoints: () => ({ raw: rawPoints, smoothed: smoothedPoints }),
-        redraw: () => drawSmoothTrail()
-    };
+.heart-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 1;
+    transition: 
+        left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s ease;
+    will-change: left, transform;
+}
+
+.heart {
+    width: 100%;
+    height: 100%;
+    background-color: #ff4d6d;
+    position: relative;
+    transform: rotate(45deg);
+    box-shadow: 
+        0 0 15px rgba(255, 77, 109, 0.8),
+        0 0 30px rgba(255, 77, 109, 0.4);
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Анимация сердца при движении */
+.heart-container.moving-left .heart {
+    transform: rotate(45deg) rotateY(20deg) scale(1.05);
+    animation: pulse-left 0.6s ease infinite alternate;
+}
+
+.heart-container.moving-right .heart {
+    transform: rotate(45deg) rotateY(-20deg) scale(1.05);
+    animation: pulse-right 0.6s ease infinite alternate;
+}
+
+@keyframes pulse-left {
+    0% { transform: rotate(45deg) rotateY(15deg) scale(1); }
+    100% { transform: rotate(45deg) rotateY(25deg) scale(1.1); }
+}
+
+@keyframes pulse-right {
+    0% { transform: rotate(45deg) rotateY(-15deg) scale(1); }
+    100% { transform: rotate(45deg) rotateY(-25deg) scale(1.1); }
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.heart::before {
+    top: -50%;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: -50%;
+}
+
+.heart-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    opacity: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.heart-visible {
+    opacity: 1;
 }
