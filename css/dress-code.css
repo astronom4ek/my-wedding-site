@@ -304,7 +304,8 @@
 }
 
 .guideline-column.men li:before {
-  color: var(--color-brown);
+  /* color: var(--color-brown); */
+  color: var(--color-green);
 }
 
 /* Примечание */

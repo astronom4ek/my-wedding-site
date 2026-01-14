@@ -10,7 +10,7 @@
   --color-pink-light: #f8e9e9;
   --color-gray-light: #5a5a5a;
   --color-white: #ffffff;
-  
+  --color-green: #31680a;
   /* Градиенты */
   --gradient-primary: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary-lighter) 100%);
   --gradient-pink: linear-gradient(135deg, rgba(248, 233, 233, 0.3), rgba(232, 211, 197, 0.2));

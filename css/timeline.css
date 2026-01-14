@@ -107,6 +107,7 @@
     max-width: 800px;
     margin: 0 auto;
     min-height: 800px;
+    /* padding-block: 50px; */
 }
 
 /* Общие стили блоков */
