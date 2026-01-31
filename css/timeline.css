@@ -106,7 +106,7 @@
     position: relative;
     max-width: 800px;
     margin: 0 auto;
-    min-height: 800px;
+    min-height: 1200px;
     /* padding-block: 50px; */
 }
 
@@ -293,3 +293,4 @@
         height: 50px;
     }
 }
+

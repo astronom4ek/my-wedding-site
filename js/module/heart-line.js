@@ -1,251 +1,243 @@
-// heart.js - Тонкая линия, сердце в центре окна
+// heart.js - Упрощенное движение по кривой Безье
 
 export function initHeartAnimation() {
-    const section = document.getElementById('timeline');
-    if (!section) return;
+    const timelineSection = document.getElementById('timeline');
+    if (!timelineSection) {
+        console.error('Не найдена секция #timeline');
+        return;
+    }
+    
+    // === НАСТРОЙКИ ===
+    const WINDOW_POSITION = 50;    // Позиция сердца в окне (50% = посередине)
+    const SPEED_FACTOR = 1.5;      // Скорость (1.0 = нормальная)
+    // =================
     
     // Создаем элементы
+    const heartContainer = document.createElement('div');
     const heart = document.createElement('div');
+    const heartLine = document.createElement('div');
+    
+    heartContainer.className = 'heart-container';
     heart.className = 'heart';
+    heartLine.className = 'heart-line';
     
-    const container = document.createElement('div');
-    container.className = 'heart-container';
-    container.appendChild(heart);
-    
-    const line = document.createElement('div');
-    line.className = 'heart-line';
-    
-    section.appendChild(container);
-    section.appendChild(line);
-    
-    // Настройки
-    const LINE_COLOR = '#2d5a4a';
-    const LINE_WIDTH = 2; // Тонкая линия
-    
-    // Точки кривой Безье
-    const curve = [
-        [0, 0],     // Начало
-        [-25, 25],  // Контрольная 1
-        [25, 50],   // Контрольная 2
-        [0, 100]    // Конец
-    ];
+    heartContainer.appendChild(heart);
+    timelineSection.appendChild(heartContainer);
+    timelineSection.appendChild(heartLine);
     
     // Переменные
     let sectionTop = 0;
     let sectionHeight = 0;
     let windowHeight = 0;
-    let points = [];
     
-    // Canvas
-    let canvas, ctx;
+    // Точки кривой Безье (x: -50..50, y: 0..100)
+    const BEZIER_POINTS = [
+        [0, 0],     // Начало: сверху по центру
+        [-30, 25],  // Контрольная точка 1
+        [30, 50],   // Контрольная точка 2
+        [0, 100]    // Конец: снизу по центру
+    ];
     
-    // Инициализация canvas
-    function initCanvas() {
-        canvas = document.createElement('canvas');
-        canvas.style.cssText = `
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 99;
-        `;
-        line.appendChild(canvas);
-        ctx = canvas.getContext('2d');
-        resizeCanvas();
-    }
-    
-    // Изменение размера canvas
-    function resizeCanvas() {
-        if (!canvas) return;
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = section.offsetWidth * dpr;
-        canvas.height = sectionHeight * dpr;
-        canvas.style.width = `${section.offsetWidth}px`;
-        canvas.style.height = `${sectionHeight}px`;
-        if (ctx) {
-            ctx.scale(dpr, dpr);
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-        }
-    }
-    
-    // Расчет позиции на кривой
-    function getCurvePoint(t) {
+    // Кубическая кривая Безье
+    function cubicBezier(t, p0, p1, p2, p3) {
         const u = 1 - t;
-        const p0 = curve[0], p1 = curve[1], p2 = curve[2], p3 = curve[3];
+        const uu = u * u;
+        const uuu = uu * u;
+        const tt = t * t;
+        const ttt = tt * t;
         
-        const x = u*u*u*p0[0] + 3*u*u*t*p1[0] + 3*u*t*t*p2[0] + t*t*t*p3[0];
-        const y = u*u*u*p0[1] + 3*u*u*t*p1[1] + 3*u*t*t*p2[1] + t*t*t*p3[1];
+        const x = uuu * p0[0] + 3 * uu * t * p1[0] + 3 * u * tt * p2[0] + ttt * p3[0];
+        const y = uuu * p0[1] + 3 * uu * t * p1[1] + 3 * u * tt * p2[1] + ttt * p3[1];
         
         return { x, y };
     }
     
-    // Рисование линии
-    function drawLine() {
-        if (!ctx || points.length < 2) return;
+    // Получить точку на траектории
+    function getPointOnTrajectory(progress) {
+        return cubicBezier(
+            progress,
+            BEZIER_POINTS[0],
+            BEZIER_POINTS[1],
+            BEZIER_POINTS[2],
+            BEZIER_POINTS[3]
+        );
+    }
+    
+    // Обновить размеры
+    function updateSizes() {
+        const rect = timelineSection.getBoundingClientRect();
+        sectionTop = rect.top + window.pageYOffset;
+        sectionHeight = rect.height;
+        windowHeight = window.innerHeight;
+    }
+    
+    // Рисовать траекторию
+    let trailCanvas = null;
+    let trailCtx = null;
+    
+    function initTrailCanvas() {
+        trailCanvas = document.createElement('canvas');
+        trailCanvas.className = 'heart-trail';
+        trailCanvas.style.position = 'absolute';
+        trailCanvas.style.top = '0';
+        trailCanvas.style.left = '0';
+        trailCanvas.style.width = '100%';
+        trailCanvas.style.height = '100%';
+        trailCanvas.style.zIndex = '99';
+        trailCanvas.style.pointerEvents = 'none';
         
-        ctx.lineWidth = LINE_WIDTH;
-        ctx.strokeStyle = LINE_COLOR;
+        heartLine.innerHTML = '';
+        heartLine.appendChild(trailCanvas);
         
-        const centerX = section.offsetWidth / 2;
+        trailCtx = trailCanvas.getContext('2d');
+    }
+    
+    // Рисовать пройденный путь
+    let drawnProgress = 0;
+    
+    function drawTrail(progress) {
+        if (!trailCanvas || !trailCtx) initTrailCanvas();
         
-        // Рисуем линию через все точки
-        ctx.beginPath();
-        ctx.moveTo(centerX + points[0].x, points[0].y);
+        const width = timelineSection.offsetWidth;
+        const height = sectionHeight;
         
-        for (let i = 1; i < points.length; i++) {
-            ctx.lineTo(centerX + points[i].x, points[i].y);
+        // Обновляем размеры canvas если изменились
+        if (trailCanvas.width !== width || trailCanvas.height !== height) {
+            trailCanvas.width = width;
+            trailCanvas.height = height;
         }
         
-        ctx.stroke();
+        const centerX = width / 2;
+        
+        // Если начали заново - очищаем
+        if (progress <= drawnProgress) {
+            trailCtx.clearRect(0, 0, width, height);
+            drawnProgress = 0;
+        }
+        
+        // Рисуем новую часть кривой
+        if (progress > drawnProgress) {
+            trailCtx.beginPath();
+            trailCtx.lineWidth = 5;
+            trailCtx.lineCap = 'round';
+            trailCtx.lineJoin = 'round';
+            
+            // Градиент
+            const gradient = trailCtx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(255, 77, 109, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 77, 109, 0.9)');
+            trailCtx.strokeStyle = gradient;
+            
+            // Рисуем кривую от drawnProgress до progress
+            const steps = 50;
+            const step = (progress - drawnProgress) / steps;
+            
+            for (let i = 0; i <= steps; i++) {
+                const t = drawnProgress + i * step;
+                if (t > progress) break;
+                
+                const point = getPointOnTrajectory(t);
+                const x = centerX + (point.x / 100 * width);
+                const y = (point.y / 100 * height);
+                
+                if (i === 0) {
+                    trailCtx.moveTo(x, y);
+                } else {
+                    trailCtx.lineTo(x, y);
+                }
+            }
+            
+            trailCtx.stroke();
+            
+            // Свечение
+            trailCtx.shadowColor = '#ff4d6d';
+            trailCtx.shadowBlur = 10;
+            trailCtx.stroke();
+            trailCtx.shadowBlur = 0;
+            
+            drawnProgress = progress;
+        }
     }
     
     // Основное обновление
-    function update() {
-        // Размеры
-        const rect = section.getBoundingClientRect();
-        sectionTop = rect.top + window.scrollY;
-        sectionHeight = rect.height;
-        windowHeight = window.innerHeight;
+    function updateHeart() {
+        const scrollY = window.pageYOffset;
         
-        // Позиция скролла
-        const scrollY = window.scrollY;
-        
-        // Когда начинается анимация (когда секция появляется в центре окна)
-        const centerTrigger = sectionTop - windowHeight * 0.5;
-        // Когда заканчивается анимация (когда секция уходит из центра)
-        const centerEnd = sectionTop + sectionHeight - windowHeight * 0.5;
+        const heartWindowPosition = (WINDOW_POSITION / 100) * windowHeight;
+        const animationStart = sectionTop - heartWindowPosition;
+        const animationEnd = sectionTop + sectionHeight - heartWindowPosition;
         
         let progress = 0;
-        let isActive = false;
         
-        // Проверяем, находимся ли мы в зоне анимации
-        if (scrollY > centerTrigger && scrollY < centerEnd) {
-            isActive = true;
+        if (scrollY > animationStart) {
+            heartContainer.classList.add('heart-visible');
             
-            // Прогресс от 0 до 1 внутри зоны анимации
-            const totalRange = centerEnd - centerTrigger;
-            const currentInRange = scrollY - centerTrigger;
-            
-            // СКОРОСТЬ: сердце проходит всю траекторию пока секция проходит через центр окна
-            // Это обеспечивает постоянное нахождение сердца в центре окна
-            progress = currentInRange / totalRange;
-            progress = Math.min(Math.max(progress, 0), 1);
-        }
-        
-        // Инициализируем canvas при первом движении
-        if (isActive && !canvas) {
-            initCanvas();
-        }
-        
-        if (isActive) {
-            // Получаем позицию на кривой
-            const point = getCurvePoint(progress);
-            const width = section.offsetWidth;
-            const height = sectionHeight;
-            
-            // Преобразуем в пиксели
-            const x = (point.x / 100) * width;
-            const y = (point.y / 100) * height;
-            
-            // Добавляем точку (только если прогресс увеличился)
-            const lastPoint = points[points.length - 1];
-            if (!lastPoint || progress > lastPoint.progress) {
-                points.push({ x, y, progress });
-                
-                // Ограничиваем массив точек
-                if (points.length > 200) {
-                    points = points.slice(-150);
-                }
-                
-                // Рисуем линию
-                drawLine();
-            }
-            
-            // Обновляем позицию сердца
-            container.style.top = `${y}px`;
-            container.style.left = `calc(50% + ${x}px)`;
-            container.style.opacity = '1';
-            
-            // Поворачиваем сердце по направлению движения
-            if (progress < 0.99) {
-                const nextPoint = getCurvePoint(progress + 0.01);
-                const angle = Math.atan2(
-                    (nextPoint.y - point.y) * height,
-                    (nextPoint.x - point.x) * width
-                ) * (180 / Math.PI);
-                heart.style.transform = `rotate(${45 + angle * 0.2}deg)`;
+            if (scrollY < animationEnd) {
+                const totalRange = animationEnd - animationStart;
+                const currentInRange = scrollY - animationStart;
+                progress = (currentInRange / totalRange) * SPEED_FACTOR;
+                progress = Math.max(0, Math.min(1, progress));
             } else {
-                heart.style.transform = 'rotate(45deg)';
+                progress = 1;
             }
-            
+        }
+        
+        // Получить позицию на кривой
+        const point = getPointOnTrajectory(progress);
+        
+        // Обновить позицию сердца
+        const width = timelineSection.offsetWidth;
+        const xPos = (point.x / 100) * width;
+        const yPos = (point.y / 100) * sectionHeight;
+        
+        heartContainer.style.top = `${yPos}px`;
+        heartContainer.style.left = `calc(50% + ${xPos}px)`;
+        
+        // Поворачиваем сердце по направлению
+        if (progress < 0.99) {
+            const nextPoint = getPointOnTrajectory(progress + 0.01);
+            const angle = Math.atan2(
+                nextPoint.y - point.y,
+                nextPoint.x - point.x
+            ) * (180 / Math.PI);
+            heart.style.transform = `rotate(${45 + angle * 0.5}deg)`;
+        }
+        
+        // Рисовать след
+        if (progress > 0) {
+            drawTrail(progress);
         } else {
-            // До или после анимации
-            container.style.opacity = '0.3'; // Полупрозрачное
-            
-            // Устанавливаем начальную или конечную позицию
-            const targetProgress = scrollY < centerTrigger ? 0 : 1;
-            const point = getCurvePoint(targetProgress);
-            const width = section.offsetWidth;
-            const y = (point.y / 100) * sectionHeight;
-            const x = (point.x / 100) * width;
-            
-            container.style.top = `${y}px`;
-            container.style.left = `calc(50% + ${x}px)`;
-            heart.style.transform = 'rotate(45deg)';
-            
-            // Сбрасываем точки если вышли за начало
-            if (scrollY <= centerTrigger) {
-                points = [];
-                if (ctx) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
+            // Сброс при начале
+            drawnProgress = 0;
+            if (trailCtx) {
+                trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
             }
         }
     }
     
-    // Обработчики событий
+    // Обработчик скролла
     let ticking = false;
-    
     function onScroll() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                update();
+                updateHeart();
                 ticking = false;
             });
             ticking = true;
         }
     }
     
-    function onResize() {
-        resizeCanvas();
-        if (points.length > 0 && ctx) {
-            // Пересчитываем точки при изменении размера
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            const newPoints = points.map(p => {
-                const point = getCurvePoint(p.progress);
-                const width = section.offsetWidth;
-                const height = sectionHeight;
-                const x = (point.x / 100) * width;
-                const y = (point.y / 100) * height;
-                return { x, y, progress: p.progress };
-            });
-            
-            points = newPoints;
-            drawLine();
-        }
-        update();
-    }
-    
     // Инициализация
     function init() {
-        update();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onResize);
+        updateSizes();
+        initTrailCanvas();
+        updateHeart();
         
-        // Первоначальное обновление
-        requestAnimationFrame(update);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => {
+            updateSizes();
+            updateHeart();
+        });
     }
     
     // Запуск
@@ -254,4 +246,13 @@ export function initHeartAnimation() {
     } else {
         init();
     }
+    
+    return {
+        updateTrajectory: (points) => {
+            if (points.length === 4) {
+                BEZIER_POINTS.splice(0, 4, ...points);
+                updateHeart();
+            }
+        }
+    };
 }

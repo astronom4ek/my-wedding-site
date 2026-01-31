@@ -1,20 +1,20 @@
-/* heart.css - тонкая линия */
+/* heart.css */
 .timeline-section {
     position: relative;
-    overflow: visible;
+    overflow: visible !important;
 }
 
 .heart-container {
     position: absolute;
     top: 0;
     left: 50%;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     z-index: 100;
     pointer-events: none;
     opacity: 1;
     transform: translateX(-50%);
-    transition: opacity 0.3s ease;
+    transition: none;
 }
 
 .heart {
@@ -23,27 +23,9 @@
     background: #ff4d6d;
     position: relative;
     transform: rotate(45deg);
-    border-radius: 2px;
-    box-shadow: 
-        0 0 15px rgba(255, 77, 109, 0.7),
-        0 0 30px rgba(255, 77, 109, 0.3);
-    animation: heartbeat 1.8s ease-in-out infinite;
-    transition: transform 0.3s ease;
-}
-
-@keyframes heartbeat {
-    0%, 100% { 
-        transform: rotate(45deg) scale(1);
-        box-shadow: 
-            0 0 15px rgba(255, 77, 109, 0.7),
-            0 0 30px rgba(255, 77, 109, 0.3);
-    }
-    50% { 
-        transform: rotate(45deg) scale(1.08);
-        box-shadow: 
-            0 0 20px rgba(255, 77, 109, 0.9),
-            0 0 40px rgba(255, 77, 109, 0.5);
-    }
+    border-radius: 3px;
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+    transition: transform 0.2s ease;
 }
 
 .heart::before,
@@ -76,58 +58,45 @@
     pointer-events: none;
 }
 
-/* Шахматный порядок блоков */
+.heart-visible {
+    opacity: 1;
+}
+
+/* Для шахматного порядка блоков */
 .timeline-container {
     position: relative;
     max-width: 800px;
     margin: 0 auto;
-    padding: 80px 20px;
+    padding: 40px 20px;
 }
 
 .timeline-event {
     position: relative;
-    margin: 80px 0;
-    padding: 25px;
-    border-radius: 12px;
+    margin: 60px 0;
+    padding: 20px;
     background: white;
-    box-shadow: 0 4px 20px rgba(45, 90, 74, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
     width: 45%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.timeline-event:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 25px rgba(45, 90, 74, 0.12);
 }
 
 .event-left {
     margin-right: 55%;
-    text-align: right;
-    border-right: 3px solid #2d5a4a;
+    border-right: 3px solid #ff4d6d;
 }
 
 .event-right {
     margin-left: 55%;
-    text-align: left;
-    border-left: 3px solid #2d5a4a;
+    border-left: 3px solid #ff4d6d;
 }
 
 .event-time {
-    color: #2d5a4a;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 1.1em;
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .event-title {
-    color: #1a3c2d;
     margin-bottom: 10px;
-    font-size: 1.4em;
-    font-weight: 500;
-}
-
-.event-description {
-    color: #4a7663;
-    line-height: 1.6;
-    font-size: 1em;
+    color: #333;
 }

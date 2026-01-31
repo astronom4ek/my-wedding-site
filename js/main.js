@@ -5,14 +5,15 @@ import { initDressCodeSliders } from './module/dress-code.js';
 console.log('Dress-code модуль найден');
 // import { initTimeline } from './module/timeline_2.js';
 import { initTimeline } from './timeline.js';
-import { initHeartAnimation } from './module/heart-line.js';
+// import { initHeartAnimation } from './module/heart-line.js';
+// import { HeartsBrushController } from './heartsBrush.js';
 
 
 console.log('Timeline модуль найден');
 import { initLocation } from './module/map.js';
 import { initGifts } from './module/gifts-section.js';
 // import { initWeddingHero } from './module/wedding-hero.js';
-import { initHero } from './module/hero.js';
+// import { initHero } from './module/hero.js';
 
 
 
@@ -23,8 +24,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // initTimeline(); // Добавьте эту строку
     // initHeartLine();
 
-    const cleanupHeartLine = initHeartAnimation();
+
+
+    // const cleanupHeartLine = initHeartAnimation();
     const cleanupTimeline = initTimeline();
+
+
+    // Переинициализация при изменении контента
+    // const heartsBrush = new HeartsBrushController();
+    // heartsBrush.init('.timeline-section');
+
 
     initDressCodeSliders ();
     initLocation();
