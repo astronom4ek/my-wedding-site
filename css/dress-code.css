@@ -311,7 +311,7 @@
 /* Примечание */
 .dress-code-note {
   max-width: 800px;
-  margin: var(--spacing-md) auto 0;
+  margin: var(--spacing-md) auto 10;
   padding: var(--spacing-xs);
   background: var(--gradient-pink);
   border-radius: var(--radius-medium);

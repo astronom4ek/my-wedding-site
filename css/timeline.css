@@ -34,7 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* Для позиционирования квадратика */
+    position: relative;
     cursor: pointer;
     transition: all var(--transition-fast);
 }
@@ -44,10 +44,10 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    background: rgba(138, 123, 109, 0.08); /* Полупрозрачный коричневый */
+    background: rgba(138, 123, 109, 0.08);
     border: 1.5px solid rgba(138, 123, 109, 0.15);
     border-radius: var(--radius-small);
-    z-index: -1; /* Под цифрой */
+    z-index: -1;
     transition: all var(--transition-fast);
 }
 
@@ -76,7 +76,7 @@
     transition: all var(--transition-fast);
 }
 
-/* Анимация при наведении на календарь */
+/* Анимация при наведении */
 .calendar-day:hover .date-square {
     background: rgba(138, 123, 109, 0.15);
     border-color: rgba(138, 123, 109, 0.25);
@@ -104,16 +104,16 @@
 /* БЛОКИ РАСПИСАНИЯ */
 .timeline-container {
     position: relative;
-    max-width: 800px;
+    max-width: 900px; /* Немного увеличил */
     margin: 0 auto;
-    min-height: 1200px;
-    /* padding-block: 50px; */
+    min-height: 900px; /* Увеличил высоту для большего интервала */
 }
 
 /* Общие стили блоков */
 .timeline-event {
     position: absolute;
-    width: 45%;
+    width: 45%; /* Для десктопа */
+    max-width: 380px; /* Максимальная ширина блока */
     padding: 25px;
     background: var(--color-white);
     border-radius: var(--radius-medium);
@@ -122,7 +122,7 @@
     backdrop-filter: blur(8px);
     transition: all var(--transition-medium);
     cursor: pointer;
-    overflow: hidden; /* Для анимации псевдоэлементов */
+    overflow: hidden;
 }
 
 /* Псевдоэлемент для анимации свечения */
@@ -155,11 +155,11 @@
     text-align: right;
 }
 
-/* Расположение блоков */
-.timeline-event:nth-child(1) { top: 10%; }
-.timeline-event:nth-child(2) { top: 30%; }
-.timeline-event:nth-child(3) { top: 50%; }
-.timeline-event:nth-child(4) { top: 850%; }
+/* Расположение блоков с большими интервалами */
+.timeline-event:nth-child(1) { top: 12%; }   /* Было 10% */
+.timeline-event:nth-child(2) { top: 28%; }   /* Было 30% */
+.timeline-event:nth-child(3) { top: 44%; }   /* Было 50% */
+.timeline-event:nth-child(4) { top: 60%; }   /* Было 70% */
 
 /* Стили текста */
 .event-time {
@@ -193,7 +193,7 @@
     transition: all var(--transition-fast);
 }
 
-/* АНИМАЦИИ ПРИ НАВЕДЕНИИ НА БЛОКИ */
+/* АНИМАЦИИ ПРИ НАВЕДЕНИИ */
 
 /* Эффект подъема и тени */
 .timeline-event:hover {
@@ -212,7 +212,7 @@
     left: 100%;
 }
 
-/* Анимация текста при наведении */
+/* Анимация текста */
 .timeline-event:hover .event-time {
     color: var(--color-pink);
     transform: translateX(5px);
@@ -260,18 +260,121 @@
     width: 100%;
 }
 
-/* АДАПТИВНОСТЬ */
-@media (max-width: 768px) {
-    .timeline-event {
-        width: 85%;
-        left: 50% !important;
-        right: auto !important;
-        transform: translateX(-50%);
-        text-align: center !important;
+/* Стили для сердца */
+.timeline-heart {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(248, 180, 208, 0.3));
+}
+
+.timeline-heart svg {
+    width: 50px;
+    height: 50px;
+    fill: var(--color-pink);
+    opacity: 0.9;
+}
+
+/* ПЛАВНОЕ СМЕЩЕНИЕ К ЦЕНТРУ ПРИ УМЕНЬШЕНИИ ЭКРАНА */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Для планшетов и узких экранов */
+    .timeline-container {
+        max-width: 700px;
     }
     
+    .timeline-event {
+        width: 48%; /* Чуть уже */
+        max-width: 340px;
+    }
+    
+    /* Смещаем блоки ближе к центру */
+    .timeline-event:nth-child(even) {
+        right: 10px; /* Вместо 0 */
+    }
+    
+    .timeline-event:nth-child(odd) {
+        left: 10px; /* Вместо 0 */
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    /* Для экранов среднего размера */
+    .timeline-container {
+        max-width: 850px;
+    }
+    
+    .timeline-event {
+        width: 46%;
+        max-width: 360px;
+    }
+    
+    .timeline-event:nth-child(even) {
+        right: 5px;
+    }
+    
+    .timeline-event:nth-child(odd) {
+        left: 5px;
+    }
+}
+
+/* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ */
+@media (max-width: 768px) {
+    .timeline-container {
+        position: relative;
+        min-height: auto;
+        max-width: 100%;
+        padding: 0 15px; /* Добавим боковые отступы */
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        align-items: center; /* Центрируем все блоки */
+        padding-bottom: 40px;
+    }
+    
+    .timeline-event {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 320px !important; /* Фиксированная максимальная ширина */
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important; /* Убираем transform */
+        text-align: center !important;
+        margin: 0 auto; /* Центрируем */
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    /* Абсолютное центрирование */
+    .timeline-event:nth-child(1),
+    .timeline-event:nth-child(2),
+    .timeline-event:nth-child(3),
+    .timeline-event:nth-child(4) {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+    }
+    
+    /* Анимация появления */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .timeline-event:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-event:nth-child(2) { animation-delay: 0.2s; }
+    .timeline-event:nth-child(3) { animation-delay: 0.3s; }
+    .timeline-event:nth-child(4) { animation-delay: 0.4s; }
+    
     .timeline-event:hover {
-        transform: translateX(-50%) translateY(-8px) scale(1.02);
+        transform: translateY(-8px) scale(1.02) !important;
     }
     
     .calendar-compact {
@@ -292,5 +395,49 @@
         width: 50px;
         height: 50px;
     }
+    
+    .timeline-heart svg {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Сердце на мобилке - скрываем если мешает */
+    .timeline-heart {
+        display: none;
+    }
 }
 
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .timeline-event {
+        max-width: 280px !important;
+        padding: 20px;
+    }
+    
+    .event-time {
+        font-size: calc(var(--font-size-h3) * 0.9);
+    }
+    
+    .event-title {
+        font-size: calc(var(--font-size-h4) * 0.9);
+    }
+    
+    .calendar-compact {
+        gap: 10px;
+    }
+    
+    .calendar-day {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .date-square {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .wedding-square {
+        width: 45px;
+        height: 45px;
+    }
+}

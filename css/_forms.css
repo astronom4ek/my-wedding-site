@@ -28,6 +28,14 @@
   font-style: italic;
   text-align: center;
   line-height: 1.5;
+  padding: 0 var(--spacing-sm);
+}
+
+/* Контейнер для формы */
+.form-container {
+  width: 100%;
+  overflow: hidden; /* Скрываем скролл бары iframe */
+  margin: var(--spacing-md) 0;
 }
 
 /* Основные стили для формы */
@@ -42,45 +50,115 @@
 
 /* СКРУГЛЕНИЕ ДЛЯ RSVP CONTENT-BLOCK */
 .rsvp.content-block {
-  border-radius: var(--radius-large); /* Скругление углов */
-  overflow: hidden; /* Важно! */
+  border-radius: var(--radius-large);
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(209, 184, 160, 0.2);
 }
 
 /* Для iframe внутри */
 .rsvp.content-block iframe {
-  border-radius: calc(var(--radius-large) - 8px); /* Немного меньше */
+  width: 100% !important;
+  display: block;
+  border: none;
 }
 
-/* Адаптивность */
+/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  .rsvp-form-section {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  
-  .rsvp-form-section .container {
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  
-  .rsvp-form {
+  /* Убираем все отступы и делаем форму на всю ширину */
+  .rsvp.content-block {
     max-width: 100% !important;
     width: 100% !important;
     margin: 0 !important;
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-sm) !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     border-left: none !important;
     border-right: none !important;
   }
   
-  /* На мобильных */
+  .rsvp-description {
+    padding: 0 var(--spacing-xs);
+  }
+  
+  /* Контейнер формы на всю ширину без отступов */
+  .form-container {
+    margin: 0 calc(-1 * var(--spacing-sm)) !important; /* Компенсируем padding родителя */
+    width: calc(100% + 2 * var(--spacing-sm)) !important;
+  }
+  
+  /* Форма Google на всю ширину экрана */
+  .rsvp.content-block iframe {
+    width: 100% !important;
+    height: 600px !important; /* Увеличим высоту для мобилок */
+    min-height: 600px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    display: block;
+  }
+  
+  /* Принудительное увеличение масштаба формы Google */
+  .rsvp.content-block iframe {
+    transform: scale(1.02); /* Небольшое увеличение */
+    transform-origin: 0 0;
+  }
+  
+  .form-note {
+    padding: 0 var(--spacing-xs);
+    font-size: calc(var(--font-size-caption) * 0.9);
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
   .rsvp.content-block {
-    border-radius: var(--radius-medium);
+    padding: var(--spacing-sm) var(--spacing-xs) !important;
+  }
+  
+  .form-container {
+    margin: 0 calc(-1 * var(--spacing-xs)) !important;
+    width: calc(100% + 2 * var(--spacing-xs)) !important;
   }
   
   .rsvp.content-block iframe {
-    border-radius: calc(var(--radius-medium) - 6px);
+    height: 650px !important;
+    min-height: 650px !important;
+    transform: scale(1.05); /* Чуть больше увеличение для мелких экранов */
+    transform-origin: 0 0;
   }
+  
+  .rsvp-description {
+    font-size: calc(var(--font-size-body) * 0.9);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .form-note {
+    font-size: calc(var(--font-size-caption) * 0.85);
+  }
+}
+
+/* Для десктопа */
+@media (min-width: 769px) {
+  .rsvp.content-block iframe {
+    height: 700px; /* Фиксированная высота для десктопа */
+  }
+}
+
+/* В начале файла или после .rsvp.content-block */
+.rsvp.content-block {
+    margin-top: var(--spacing-xl); /* Используй свою переменную если есть */
+    /* или просто */
+    margin-top: 40px;
+}
+
+/* Для мобилки можно меньше */
+@media (max-width: 768px) {
+    .rsvp.content-block {
+        margin-top: 30px;
+    }
 }
