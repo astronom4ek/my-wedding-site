@@ -18,8 +18,6 @@ import { initGifts } from './module/gifts-section.js';
 
 import { initTicker } from './module/invite.js';
 
-//последняя версия сердца
-import { initHeartAnimation } from './module/new_heart.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Свадебный сайт загружается...');
@@ -52,6 +50,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // // Общие инициализации
     // initSmoothScroll();
     // initAnimations();
-
-    initHeartAnimation();
 });
