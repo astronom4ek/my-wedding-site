@@ -1,0 +1,146 @@
+/* ========== БЕГУЩАЯ СТРОКА ПРИГЛАШЕНИЯ ========== */
+
+.invitation-ticker-section {
+    background: linear-gradient(
+        135deg,
+        var(--color-primary-light) 0%,
+        var(--color-pink-light) 100%
+    );
+    padding: 25px 0;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+    border-top: 2px solid rgba(248, 180, 208, 0.3);
+    border-bottom: 2px solid rgba(248, 180, 208, 0.3);
+}
+
+.ticker-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tickerMove 20s linear infinite; /* Скорость из простой версии */
+    will-change: transform; /* Для плавной анимации */
+}
+
+.ticker-content {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Меньше расстояния между элементами */
+    padding: 0 10px;
+}
+
+.ticker-text {
+    font-family: var(--font-primary);
+    font-size: 1.5rem; /* Размер из простой версии */
+    color: var(--color-brown);
+    font-weight: 500; /* Тоньше, из простой версии */
+    text-transform: uppercase;
+    letter-spacing: 1px; /* Из простой версии */
+    white-space: nowrap;
+    padding: 5px 0; /* Меньше padding */
+    opacity: 0.9;
+}
+
+.ticker-dot {
+    font-size: 1.8rem;
+    color: var(--color-pink);
+    opacity: 0.7;
+    font-weight: 300;
+    margin: 0 2px;
+}
+
+/* Анимация бегущей строки */
+@keyframes tickerMove {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Бесшовная анимация */
+    }
+}
+
+/* Эффект при наведении - только пауза */
+.ticker-track:hover {
+    animation-play-state: paused;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .invitation-ticker-section {
+        padding: 18px 0;
+        margin: 30px 0;
+    }
+    
+    .ticker-text {
+        font-size: 1.2rem;
+        letter-spacing: 0.8px;
+        font-weight: 500;
+    }
+    
+    .ticker-dot {
+        font-size: 1.5rem;
+    }
+    
+    .ticker-content {
+        gap: 8px;
+    }
+    
+    .ticker-track {
+        animation: tickerMove 15s linear infinite; /* Быстрее на мобилке */
+    }
+}
+
+@media (max-width: 480px) {
+    .invitation-ticker-section {
+        padding: 15px 0;
+        margin: 25px 0;
+    }
+    
+    .ticker-text {
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .ticker-dot {
+        font-size: 1.3rem;
+    }
+    
+    .ticker-content {
+        gap: 6px;
+    }
+    
+    .ticker-track {
+        animation: tickerMove 12s linear infinite;
+    }
+}
+
+/* Для очень широких экранов - медленнее */
+@media (min-width: 1600px) {
+    .ticker-track {
+        animation: tickerMove 25s linear infinite;
+    }
+}
+
+/* Для средних экранов */
+@media (min-width: 1200px) and (max-width: 1599px) {
+    .ticker-track {
+        animation: tickerMove 22s linear infinite;
+    }
+}
+
+/* Плавное появление */
+.ticker-track {
+    opacity: 0;
+    animation: tickerMove 20s linear infinite, fadeIn 0.5s ease-out 0.2s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

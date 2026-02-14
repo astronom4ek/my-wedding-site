@@ -4,7 +4,7 @@
 import { initDressCodeSliders } from './module/dress-code.js';
 console.log('Dress-code модуль найден');
 // import { initTimeline } from './module/timeline_2.js';
-import { initTimeline } from './timeline.js';
+// import { initTimeline } from './timeline.js';
 // import { initHeartAnimation } from './module/heart-line.js';
 // import { HeartsBrushController } from './heartsBrush.js';
 
@@ -14,7 +14,9 @@ import { initLocation } from './module/map.js';
 import { initGifts } from './module/gifts-section.js';
 // import { initWeddingHero } from './module/wedding-hero.js';
 // import { initHero } from './module/hero.js';
+// import { initTicker } from './ticker.js';
 
+import { initTicker } from './module/invite.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // const cleanupHeartLine = initHeartAnimation();
-    const cleanupTimeline = initTimeline();
-
+    // const cleanupTimeline = initTimeline();
+    initTicker();
 
     // Переинициализация при изменении контента
     // const heartsBrush = new HeartsBrushController();
@@ -39,12 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initLocation();
     initGifts();
     // initWeddingHero();
-    initHero();
+    // initHero();
         // Функция для очистки всего
-    window.addEventListener('beforeunload', function() {
-        cleanupTimeline?.();
-        cleanupHeartLine?.();
-    });
+    // window.addEventListener('beforeunload', function() {
+    //     cleanupTimeline?.();
+    //     cleanupHeartLine?.();
+    // });
     // // Общие инициализации
     // initSmoothScroll();
     // initAnimations();
