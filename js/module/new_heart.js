@@ -22,6 +22,9 @@ function initHeartAnimation() {
         startOffset: 80,         // Отступ сверху (чтобы сердце начинало путь ниже верха секции)
         endOffset: 120,           // Отступ снизу (чтобы сердце заканчивало путь выше низа секции, где бокал)
         fadeSpeed: 0.1,          // Скорость затухания хвоста (чем меньше, тем длиннее след)
+        lineWidth: 6,              // Было 3, стало 6
+        lineColor: 'rgba(255, 120, 180, 0.7)', // Чуть ярче и прозрачнее
+        lineBrushEffect: true,     // Включаем эффект кисти
     };
 
     
@@ -202,39 +205,21 @@ function getPointOnWave(progress) {
 //     ctx.restore();
 // }
 function drawHeartAt(ctx, x, y, size, progress) {
-    // Пульсация (очень лёгкая, 5%)
-    const pulse = 1 + Math.sin(Date.now() / 200) * 0.05;
-    
-    // Наклон - максимально 10 градусов (0.17 рад)
-    const rotation = Math.sin(progress * Math.PI * 7) * 0.17;
-    
     ctx.save();
     ctx.translate(x, y);
-    ctx.rotate(rotation);
+    
+    // Лёгкая пульсация (если нужна)
+    const pulse = 1 + Math.sin(Date.now() / 200) * 0.03;
     ctx.scale(pulse, pulse);
     
-    // Рисуем классическое сердечко
-    ctx.beginPath();
-    ctx.fillStyle = config.heartColor;
+    // Рисуем символ сердца
+    ctx.font = `${size}px "Arial", "Helvetica", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ff4d6d';
     
-    // Размеры относительно size
-    const w = size * 0.9;
-    const h = size;
-    
-    // Левая половина сердца
-    ctx.moveTo(0, h/3);
-    ctx.bezierCurveTo(-w/2, -h/4, -w/1.2, -h/2, 0, -h/2);
-    
-    // Правая половина сердца
-    ctx.bezierCurveTo(w/1.2, -h/2, w/2, -h/4, 0, h/3);
-    
-    ctx.fill();
-    
-    // Добавляем блик для объёма (маленький белый полупрозрачный кружок)
-    ctx.beginPath();
-    ctx.arc(-w/5, -h/5, size/10, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-    ctx.fill();
+
+    ctx.fillText('❤', 0, 0); // Вот и всё!
     
     ctx.restore();
 }
